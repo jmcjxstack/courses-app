@@ -1,30 +1,19 @@
 import React from 'react';
 
-import { mockedCoursesList, mockedAuthorsList } from '../../../../constants';
 import Button from '../../../../common/Button/Button';
+import { getCourseDuration } from '../../../../helpers/getCourseDuration';
+import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 
 import './courseCard.css';
 
-export default function CourseCard() {
+export default function CourseCard({ courses, authors }) {
 	function showCourse() {
 		console.log('showing course');
 	}
 
-	function minToHours(n) {
-		let hours = n / 60;
-		let rhours = Math.floor(hours);
-		let minutes = (hours - rhours) * 60;
-		let rminutes = Math.round(minutes);
-		if (rhours < 10) {
-			return `0${rhours}:${rminutes} hour(s)`;
-		} else {
-			return `${rhours}:${rminutes} hour(s)`;
-		}
-	}
-
 	return (
 		<>
-			{mockedCoursesList.map((course) => (
+			{courses.map((course) => (
 				<div className='course-container' key={course.id}>
 					<div className='course-info-left'>
 						<h1>{course.title}</h1>
@@ -33,17 +22,20 @@ export default function CourseCard() {
 					<div className='course-info-right'>
 						<p>
 							<b>Authors: </b>
-							{course.authors}
+							{course.authors
+								.map(
+									(authorId) =>
+										authors.find((author) => author.id === authorId).name
+								)
+								.join(', ')}
 						</p>
 						<p>
 							<b>Duration: </b>
-							{minToHours(course.duration)}
+							{getCourseDuration(course.duration)}
 						</p>
 						<p>
 							<b>Created: </b>
-							{course.creationDate.slice(0, 2)}.
-							{course.creationDate.slice(3, 5)}.
-							{course.creationDate.slice(6, 8)}
+							{formatCreationDate(course.creationDate)}
 						</p>
 						<div className='show-button'>
 							<Button buttonName='Show Course' onClick={showCourse} />

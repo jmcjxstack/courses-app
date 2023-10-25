@@ -1,11 +1,11 @@
 import Header from './components/Header/Header';
-import CourseCard from './components/Courses/components/CourseCard/CourseCard';
+import Courses from './components/Courses/Courses';
 
 export default function App() {
 	return (
 		<>
 			<Header />
-			<CourseCard />
+			<Courses />
 		</>
 	);
 }
