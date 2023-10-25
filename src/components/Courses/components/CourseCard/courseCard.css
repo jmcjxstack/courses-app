@@ -1,0 +1,26 @@
+.course-container {
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    align-items: center;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.description {
+    font-size: 13px;
+    width: 60vw;
+    text-align: justify;
+    text-justify: inter-word;
+    margin-right: 25px;
+}
+
+.course-info-right p {
+    font-size: 13px;
+}
+
+.show-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

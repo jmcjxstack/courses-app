@@ -1,3 +1,11 @@
+import Header from './components/Header/Header';
+import CourseCard from './components/Courses/components/CourseCard/CourseCard';
+
 export default function App() {
-	return <div>React</div>;
+	return (
+		<>
+			<Header />
+			<CourseCard />
+		</>
+	);
 }

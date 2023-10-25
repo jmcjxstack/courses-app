@@ -1,0 +1,10 @@
+.button {
+    background: none;
+    color: inherit;
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+    outline: inherit;
+    margin-right: 10px;
+    margin-left: 10px;
+}
