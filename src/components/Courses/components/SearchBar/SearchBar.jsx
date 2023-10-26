@@ -1,20 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Input from '../../../../common/Input/Input';
 
-function onChange() {
-	console.log('change');
-}
-
 export default function SearchBar() {
+	const [course, setCourse] = useState({
+		name: '',
+	});
+
+	const { name } = course;
+
+	function handleInputChange(e) {
+		setCourse({
+			...course,
+			[e.target.name]: e.target.value,
+		});
+	}
+
 	return (
 		<div>
 			<Input
-				placeholder='Search for a course'
-				onChange={onChange}
-				labelText='Search for a course: '
-				htmlFor='input'
-				type='text'
+				placeholderText='Search for a course'
+				onChange={(e) => handleInputChange(e)}
+				labelText='Search for a course:'
+				htmlFor='searchbar'
+				type={'text'}
+				name='name'
+				id='searchbar'
+				value={name}
 			/>
 		</div>
 	);
