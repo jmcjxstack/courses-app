@@ -13,6 +13,8 @@ export default function SearchBar() {
 				placeholder='Search for a course'
 				onChange={onChange}
 				labelText='Search for a course: '
+				htmlFor='input'
+				type='text'
 			/>
 		</div>
 	);
