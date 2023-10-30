@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
@@ -6,7 +7,6 @@ import AuthorItem from './components/AuthorItem/AuthorItem';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 
 import './create-course.css';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function CreateCourse(props) {
 	const [createdAuthor, setCreatedAuthor] = useState([]);
@@ -17,6 +17,7 @@ export default function CreateCourse(props) {
 		const formattedDate = `${newDate.getDate()}/${
 			newDate.getMonth() + 1
 		}/${newDate.getFullYear()}`;
+
 		props.setNewCourse({
 			...props.newCourse,
 			id: newId,
