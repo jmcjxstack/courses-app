@@ -6,7 +6,7 @@ import './author-item.css';
 
 export default function AuthorItem(props) {
 	function addAuthor() {
-		console.log('added author');
+		console.log('Added author');
 	}
 
 	return (
