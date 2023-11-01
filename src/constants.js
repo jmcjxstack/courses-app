@@ -47,3 +47,5 @@ export const mockedAuthorsList = [
 		name: 'Valentina Larina',
 	},
 ];
+
+export const API_URL = 'http://localhost:4000';

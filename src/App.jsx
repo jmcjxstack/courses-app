@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
@@ -13,10 +13,11 @@ export default function App() {
 			<BrowserRouter>
 				<Header />
 				<Routes>
+					<Route path='*' element={<Navigate to='/login' />} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/registration' element={<Registration />} />
 					<Route path='/courses' element={<Courses />} />
 					<Route path='/courses/add' element={<CreateCourse />} />
-					<Route path='/registration' element={<Registration />} />
-					<Route path='/login' element={<Login />} />
 					<Route path='/courses/:courseId' element={<CourseInfo />} />
 				</Routes>
 			</BrowserRouter>
