@@ -1,0 +1,34 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.registration-form {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.registration-form label {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.registration-form input {
+    outline: none;
+    border: 1px solid black;
+    height: 20px;
+    width: 200px;
+    border-radius: 0;
+
+}
+
+.registration-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}

@@ -14,9 +14,14 @@ export default function CreateCourse(props) {
 	useEffect(() => {
 		const newId = uuidv4();
 		const newDate = new Date();
-		const formattedDate = `${newDate.getDate()}/${
-			newDate.getMonth() + 1
-		}/${newDate.getFullYear()}`;
+		const yyyy = newDate.getFullYear();
+		let mm = newDate.getMonth() + 1;
+		let dd = newDate.getDate();
+
+		if (dd < 10) dd = '0' + dd;
+		if (mm < 10) mm = '0' + mm;
+
+		const formattedDate = `${dd}/${mm}/${yyyy}`;
 
 		props.setNewCourse({
 			...props.newCourse,
