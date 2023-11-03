@@ -9,7 +9,6 @@ import { getCourseDuration } from '../../helpers/getCourseDuration';
 import './create-course.css';
 
 export default function CreateCourse(props) {
-	const [createdAuthor, setCreatedAuthor] = useState([]); //most likely to delete this state
 	const [newCourse, setNewCourse] = useState({
 		id: '',
 		title: '',
@@ -18,10 +17,15 @@ export default function CreateCourse(props) {
 		duration: undefined,
 		authors: [],
 	});
+
 	const [newAuthor, setNewAuthor] = useState({
 		id: '',
 		name: '',
 	});
+
+	const [authorsToAdd, setAuthorsToAdd] = useState(props.authors);
+
+	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
 	useEffect(() => {
 		const newId = getNewId();
@@ -31,8 +35,13 @@ export default function CreateCourse(props) {
 			...newCourse,
 			id: newId,
 			creationDate: newDate,
+			authors: authorsToRemove.map((author) => author.id),
 		});
-	}, []);
+	}, [authorsToRemove]);
+
+	useEffect(() => {
+		setAuthorsToAdd(props.authors);
+	}, [props.authors]);
 
 	function getNewDate() {
 		const newDate = new Date();
@@ -62,22 +71,59 @@ export default function CreateCourse(props) {
 	function handleInputChangeNewAuthorName(e) {
 		setNewAuthor({
 			...newAuthor,
-			[e.target.name]: e.target.value,
+			name: e.target.value,
+		});
+	}
+
+	function handleSubmitNewAuthor(e) {
+		e.preventDefault();
+		const authorWithId = { ...newAuthor, id: getNewId() };
+		props.setAuthors([...props.authors, authorWithId]);
+		setNewAuthor({
+			name: '',
+		});
+	}
+
+	function handleAddAuthor(e, author) {
+		e.preventDefault();
+		setAuthorsToAdd(authorsToAdd.filter((a) => a.id !== author.id));
+		setAuthorsToRemove([...authorsToRemove, author]);
+	}
+
+	function handleRemoveAuthor(e, author) {
+		e.preventDefault();
+		setAuthorsToRemove(authorsToRemove.filter((a) => a.id !== author.id));
+		setAuthorsToAdd([...authorsToAdd, author]);
+	}
+
+	function addAuthors() {
+		const updatedAuthors = authorsToRemove.map((author) => author.id);
+		setNewCourse({
+			...newCourse,
+			authors: updatedAuthors,
 		});
 	}
 
 	function handleSubmitCourse(e) {
 		e.preventDefault();
-		props.setCourses([...props.courses, newCourse]);
-		setNewCourse({
-			id: '',
-			title: '',
-			description: '',
-			creationDate: '',
-			duration: undefined,
-			authors: [],
-		});
-		props.toggleCreateCourse();
+		if (
+			newCourse.title === '' ||
+			newCourse.description === '' ||
+			newCourse.duration === undefined
+		) {
+			window.alert('Please fill in all fields');
+		} else {
+			props.setCourses([...props.courses, newCourse]);
+			setNewCourse({
+				id: '',
+				title: '',
+				description: '',
+				creationDate: '',
+				duration: undefined,
+				authors: [],
+			});
+			props.toggleCreateCourse();
+		}
 	}
 
 	return (
@@ -93,6 +139,7 @@ export default function CreateCourse(props) {
 						name='title'
 						value={newCourse.title}
 						id='title'
+						required={true}
 					/>
 					<div className='create-course-button'>
 						<Button
@@ -111,6 +158,7 @@ export default function CreateCourse(props) {
 						name='description'
 						value={newCourse.description}
 						id='description'
+						required
 					/>
 				</div>
 				<div className='bottom'>
@@ -128,8 +176,12 @@ export default function CreateCourse(props) {
 								name='name'
 								value={newAuthor.name}
 								id='author-name'
+								required={false}
 							/>
-							<Button buttonName='Create Author' />
+							<Button
+								buttonName='Create Author'
+								onClick={(e) => handleSubmitNewAuthor(e)}
+							/>
 						</div>
 						<div className='author-info'>
 							<p>
@@ -144,28 +196,40 @@ export default function CreateCourse(props) {
 								name='duration'
 								value={newCourse.duration || ''}
 								id='duration'
+								required={true}
 							/>
 							<h3>Duration: {getCourseDuration(newCourse.duration)}</h3>
 						</div>
 					</div>
-					<div className='add-author'>
+					<div className='add-remove-author'>
 						<p>
 							<b>Authors</b>
 						</p>
-						<AuthorItem authors={props.authors} buttonName='Add Author' />
-						<div className='course-authors'>
-							<p>
-								<b>Course Authors</b>
-							</p>
-							{createdAuthor.length === 0 ? (
-								<p>Authors list is empty</p>
-							) : (
+						{authorsToAdd.map((author) => (
+							<AuthorItem
+								key={author.id}
+								id={author.id}
+								name={author.name}
+								buttonName='Add author'
+								onClick={(e) => handleAddAuthor(e, author)}
+							/>
+						))}
+						<p>
+							<b>Course Authors</b>
+						</p>
+						{authorsToRemove.length === 0 ? (
+							<p>Author list is empty</p>
+						) : (
+							authorsToRemove.map((author) => (
 								<AuthorItem
-									authors={props.authors}
-									buttonName='Delete Author'
+									key={author.id}
+									id={author.id}
+									name={author.name}
+									buttonName='Delete author'
+									onClick={(e) => handleRemoveAuthor(e, author)}
 								/>
-							)}
-						</div>
+							))
+						)}
 					</div>
 				</div>
 			</form>

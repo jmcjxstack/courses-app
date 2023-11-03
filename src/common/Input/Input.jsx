@@ -11,6 +11,7 @@ export default function Input(props) {
 				type={props.type}
 				value={props.value}
 				name={props.name}
+				required={props.required}
 			/>
 		</>
 	);

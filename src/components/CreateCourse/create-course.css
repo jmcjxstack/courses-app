@@ -25,6 +25,7 @@
 .bottom {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     border: 1px black solid;
     margin: 20px;
 }
@@ -38,9 +39,13 @@
     flex-direction: column;
 }
 
+#title {
+    width: 900px ;
+}
+
 .author-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
     padding: 20px;
 }
 
@@ -60,13 +65,12 @@
     width: 100px;
 }
 
-.add-author {
+.add-remove-author {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    margin-left: 200px;
+    margin: 20px auto;
 }
 
-.course-author{
-    text-align: center;
+.author-lit {
+    display: flex;    
 }
