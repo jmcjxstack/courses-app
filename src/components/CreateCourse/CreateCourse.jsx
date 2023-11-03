@@ -9,14 +9,26 @@ import { getCourseDuration } from '../../helpers/getCourseDuration';
 import './create-course.css';
 
 export default function CreateCourse(props) {
-	const [createdAuthor, setCreatedAuthor] = useState([]);
+	const [createdAuthor, setCreatedAuthor] = useState([]); //most likely to delete this state
+	const [newCourse, setNewCourse] = useState({
+		id: '',
+		title: '',
+		description: '',
+		creationDate: '',
+		duration: undefined,
+		authors: [],
+	});
+	const [newAuthor, setNewAuthor] = useState({
+		id: '',
+		name: '',
+	});
 
 	useEffect(() => {
 		const newId = getNewId();
 		const newDate = getNewDate();
 
-		props.setNewCourse({
-			...props.newCourse,
+		setNewCourse({
+			...newCourse,
 			id: newId,
 			creationDate: newDate,
 		});
@@ -41,23 +53,23 @@ export default function CreateCourse(props) {
 	}
 
 	function handleInputChangeNewCourse(e) {
-		props.setNewCourse({
-			...props.newCourse,
+		setNewCourse({
+			...newCourse,
 			[e.target.name]: e.target.value,
 		});
 	}
 
 	function handleInputChangeNewAuthorName(e) {
-		props.setNewAuthor({
-			...props.newAuthor,
+		setNewAuthor({
+			...newAuthor,
 			[e.target.name]: e.target.value,
 		});
 	}
 
 	function handleSubmitCourse(e) {
 		e.preventDefault();
-		props.setCourses([...props.courses, props.newCourse]);
-		props.setNewCourse({
+		props.setCourses([...props.courses, newCourse]);
+		setNewCourse({
 			id: '',
 			title: '',
 			description: '',
@@ -79,7 +91,7 @@ export default function CreateCourse(props) {
 						htmlFor='title'
 						type={'text'}
 						name='title'
-						value={props.newCourse.title}
+						value={newCourse.title}
 						id='title'
 					/>
 					<div className='create-course-button'>
@@ -97,7 +109,7 @@ export default function CreateCourse(props) {
 						cols={50}
 						rows={10}
 						name='description'
-						value={props.newCourse.description}
+						value={newCourse.description}
 						id='description'
 					/>
 				</div>
@@ -114,7 +126,7 @@ export default function CreateCourse(props) {
 								htmlFor='author-name'
 								type={'text'}
 								name='name'
-								value={props.newAuthor.name}
+								value={newAuthor.name}
 								id='author-name'
 							/>
 							<Button buttonName='Create Author' />
@@ -130,10 +142,10 @@ export default function CreateCourse(props) {
 								htmlFor='duration'
 								type={'text'}
 								name='duration'
-								value={props.newCourse.duration || ''}
+								value={newCourse.duration || ''}
 								id='duration'
 							/>
-							<h3>Duration: {getCourseDuration(props.newCourse.duration)}</h3>
+							<h3>Duration: {getCourseDuration(newCourse.duration)}</h3>
 						</div>
 					</div>
 					<div className='add-author'>

@@ -12,19 +12,6 @@ export default function Courses() {
 	const [courses, setCourses] = useState(mockedCoursesList);
 	const [authors, setAuthors] = useState(mockedAuthorsList);
 	const [showCourses, setShowCourses] = useState(true);
-	const [newCourse, setNewCourse] = useState({
-		id: '',
-		title: '',
-		description: '',
-		creationDate: '',
-		duration: undefined,
-		authors: [],
-	});
-
-	const [newAuthor, setNewAuthor] = useState({
-		id: '',
-		name: '',
-	});
 
 	function toggleCreateCourse() {
 		setShowCourses((prevShowCourses) => !prevShowCourses);
@@ -48,12 +35,8 @@ export default function Courses() {
 			<CreateCourse
 				authors={authors}
 				courses={courses}
-				newAuthor={newAuthor}
-				newCourse={newCourse}
 				setAuthors={(state) => setAuthors(state)}
 				setCourses={(state) => setCourses(state)}
-				setNewAuthor={(state) => setNewAuthor(state)}
-				setNewCourse={(state) => setNewCourse(state)}
 				toggleCreateCourse={toggleCreateCourse}
 			/>
 		);
