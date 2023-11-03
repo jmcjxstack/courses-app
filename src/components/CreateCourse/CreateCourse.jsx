@@ -12,7 +12,17 @@ export default function CreateCourse(props) {
 	const [createdAuthor, setCreatedAuthor] = useState([]);
 
 	useEffect(() => {
-		const newId = uuidv4();
+		const newId = getNewId();
+		const newDate = getNewDate();
+
+		props.setNewCourse({
+			...props.newCourse,
+			id: newId,
+			creationDate: newDate,
+		});
+	}, []);
+
+	function getNewDate() {
 		const newDate = new Date();
 		const yyyy = newDate.getFullYear();
 		let mm = newDate.getMonth() + 1;
@@ -22,13 +32,41 @@ export default function CreateCourse(props) {
 		if (mm < 10) mm = '0' + mm;
 
 		const formattedDate = `${dd}/${mm}/${yyyy}`;
+		return formattedDate;
+	}
 
+	function getNewId() {
+		const newId = uuidv4();
+		return newId;
+	}
+
+	function handleInputChangeNewCourse(e) {
 		props.setNewCourse({
 			...props.newCourse,
-			id: newId,
-			creationDate: formattedDate,
+			[e.target.name]: e.target.value,
 		});
-	}, []);
+	}
+
+	function handleInputChangeNewAuthorName(e) {
+		props.setNewAuthor({
+			...props.newAuthor,
+			[e.target.name]: e.target.value,
+		});
+	}
+
+	function handleSubmitCourse(e) {
+		e.preventDefault();
+		props.setCourses([...props.courses, props.newCourse]);
+		props.setNewCourse({
+			id: '',
+			title: '',
+			description: '',
+			creationDate: '',
+			duration: undefined,
+			authors: [],
+		});
+		props.toggleCreateCourse();
+	}
 
 	return (
 		<>
@@ -36,31 +74,31 @@ export default function CreateCourse(props) {
 				<div className='top'>
 					<Input
 						placeholderText='Enter title'
-						onChange={props.handleInputChange}
+						onChange={(e) => handleInputChangeNewCourse(e)}
 						labelText='Title:'
 						htmlFor='title'
 						type={'text'}
 						name='title'
-						value={props.title}
+						value={props.newCourse.title}
 						id='title'
 					/>
 					<div className='create-course-button'>
 						<Button
 							buttonName='Create Course'
-							onClick={props.handleSubmitCourse}
+							onClick={(e) => handleSubmitCourse(e)}
 						/>
 					</div>
 				</div>
 				<div className='textarea'>
 					<label htmlFor='description'>Description:</label>
 					<textarea
-						onChange={props.handleInputChange}
-						name='description'
-						id='description'
-						cols={10}
-						rows={10}
-						value={props.description}
 						placeholder='Enter description'
+						onChange={(e) => handleInputChangeNewCourse(e)}
+						cols={50}
+						rows={10}
+						name='description'
+						value={props.newCourse.description}
+						id='description'
 					/>
 				</div>
 				<div className='bottom'>
@@ -71,13 +109,13 @@ export default function CreateCourse(props) {
 							</p>
 							<Input
 								placeholderText='Enter author name'
-								onChange={props.handleNewAuthorChange}
+								onChange={(e) => handleInputChangeNewAuthorName(e)}
 								labelText='Author name:'
 								htmlFor='author-name'
-								type='text'
+								type={'text'}
+								name='name'
+								value={props.newAuthor.name}
 								id='author-name'
-								name='newAuthorName'
-								value={props.newAuthor.id}
 							/>
 							<Button buttonName='Create Author' />
 						</div>
@@ -87,15 +125,15 @@ export default function CreateCourse(props) {
 							</p>
 							<Input
 								placeholderText='Enter duration in minutes'
-								onChange={props.handleInputChange}
+								onChange={(e) => handleInputChangeNewCourse(e)}
 								labelText='Duration:'
 								htmlFor='duration'
+								type={'text'}
 								name='duration'
-								value={props.duration}
-								type='text'
+								value={props.newCourse.duration || ''}
 								id='duration'
 							/>
-							<h3>Duration: {getCourseDuration(props.duration)}</h3>
+							<h3>Duration: {getCourseDuration(props.newCourse.duration)}</h3>
 						</div>
 					</div>
 					<div className='add-author'>

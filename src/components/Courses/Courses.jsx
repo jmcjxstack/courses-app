@@ -17,7 +17,7 @@ export default function Courses() {
 		title: '',
 		description: '',
 		creationDate: '',
-		duration: 0,
+		duration: undefined,
 		authors: [],
 	});
 
@@ -26,30 +26,8 @@ export default function Courses() {
 		name: '',
 	});
 
-	const { title, description, creationDate, duration } = newCourse;
-
 	function toggleCreateCourse() {
 		setShowCourses((prevShowCourses) => !prevShowCourses);
-	}
-
-	function handleInputChangeNewCourse(e) {
-		setNewCourse({
-			...newCourse,
-			[e.target.name]: e.target.value,
-		});
-	}
-
-	function handleInputChangeNewAuthor(e) {
-		setNewCourse({
-			...newAuthor,
-			[e.target.name]: e.target.value,
-		});
-	}
-
-	function handleSubmitCourse(e) {
-		e.preventDefault();
-		setCourses([...courses, newCourse]);
-		toggleCreateCourse();
 	}
 
 	if (showCourses) {
@@ -68,17 +46,15 @@ export default function Courses() {
 	} else {
 		return (
 			<CreateCourse
-				title={title}
-				description={description}
-				creationDate={creationDate}
-				duration={duration}
-				handleInputChange={(e) => handleInputChangeNewCourse(e)}
-				handleNewAuthorChange={(e) => handleInputChangeNewAuthor(e)}
-				handleSubmitCourse={(e) => handleSubmitCourse(e)}
 				authors={authors}
+				courses={courses}
 				newAuthor={newAuthor}
 				newCourse={newCourse}
+				setAuthors={(state) => setAuthors(state)}
+				setCourses={(state) => setCourses(state)}
+				setNewAuthor={(state) => setNewAuthor(state)}
 				setNewCourse={(state) => setNewCourse(state)}
+				toggleCreateCourse={toggleCreateCourse}
 			/>
 		);
 	}

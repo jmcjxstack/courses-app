@@ -18,7 +18,6 @@ export default function CourseInfo() {
 		try {
 			const response = await axios.get(`${API_URL}/courses/${courseId}`);
 			setCourseInfo(response.data.result);
-			console.log(response.data.result);
 		} catch (error) {
 			console.log(error);
 		}
