@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
@@ -11,7 +10,6 @@ export default function App() {
 	return (
 		<>
 			<BrowserRouter>
-				<Header />
 				<Routes>
 					<Route path='*' element={<Navigate to='/login' />} />
 					<Route path='/login' element={<Login />} />

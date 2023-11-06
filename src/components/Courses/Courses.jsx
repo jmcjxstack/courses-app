@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import Header from '../Header/Header';
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
@@ -20,6 +21,7 @@ export default function Courses() {
 	if (showCourses) {
 		return (
 			<>
+				<Header />
 				<div className='topbar'>
 					<SearchBar />
 					<Button buttonName='Search' />
@@ -32,13 +34,15 @@ export default function Courses() {
 		);
 	} else {
 		return (
-			<CreateCourse
-				authors={authors}
-				courses={courses}
-				setAuthors={(state) => setAuthors(state)}
-				setCourses={(state) => setCourses(state)}
-				toggleCreateCourse={toggleCreateCourse}
-			/>
+			<>
+				<CreateCourse
+					authors={authors}
+					courses={courses}
+					setAuthors={(state) => setAuthors(state)}
+					setCourses={(state) => setCourses(state)}
+					toggleCreateCourse={toggleCreateCourse}
+				/>
+			</>
 		);
 	}
 }

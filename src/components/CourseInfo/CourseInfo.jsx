@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 
+import Header from '../Header/Header';
 import Button from '../../common/Button/Button';
 import { API_URL } from '../../constants';
 
@@ -24,7 +25,8 @@ export default function CourseInfo() {
 	}
 
 	return (
-		<div>
+		<>
+			<Header />
 			<Button
 				buttonName='Back to Courses'
 				onClick={() => navigate('/courses')}
@@ -36,6 +38,6 @@ export default function CourseInfo() {
 			{courseInfo?.authors.map((author, idx) => (
 				<p key={idx}>Author ID: {author}</p>
 			))}
-		</div>
+		</>
 	);
 }

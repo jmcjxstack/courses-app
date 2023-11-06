@@ -10,9 +10,10 @@
 .description {
     font-size: 13px;
     width: 60vw;
-    text-align: justify;
+    text-align: auto;
     text-justify: inter-word;
     margin-right: 25px;
+    word-break: break-all;
 }
 
 .course-info-right p {

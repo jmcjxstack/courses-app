@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
+import Header from '../Header/Header';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import AuthorItem from './components/AuthorItem/AuthorItem';
@@ -31,11 +32,11 @@ export default function CreateCourse(props) {
 		const newId = getNewId();
 		const newDate = getNewDate();
 
-		setNewCourse({
-			...newCourse,
+		setNewCourse((prevState) => ({
+			...prevState,
 			id: newId,
 			creationDate: newDate,
-		});
+		}));
 	}, []);
 
 	useEffect(() => {
@@ -45,10 +46,10 @@ export default function CreateCourse(props) {
 	useEffect(() => {
 		const authorsList = authorsToRemove.map((author) => author.id);
 
-		setNewCourse({
-			...newCourse,
+		setNewCourse((prevState) => ({
+			...prevState,
 			authors: authorsList,
-		});
+		}));
 	}, [authorsToRemove]);
 
 	function getNewDate() {
@@ -132,6 +133,7 @@ export default function CreateCourse(props) {
 
 	return (
 		<>
+			<Header />
 			<form>
 				<div className='top'>
 					<Input
