@@ -35,13 +35,21 @@ export default function CreateCourse(props) {
 			...newCourse,
 			id: newId,
 			creationDate: newDate,
-			authors: authorsToRemove.map((author) => author.id),
 		});
-	}, [authorsToRemove]);
+	}, []);
 
 	useEffect(() => {
 		setAuthorsToAdd(props.authors);
 	}, [props.authors]);
+
+	useEffect(() => {
+		const authorsList = authorsToRemove.map((author) => author.id);
+
+		setNewCourse({
+			...newCourse,
+			authors: authorsList,
+		});
+	}, [authorsToRemove]);
 
 	function getNewDate() {
 		const newDate = new Date();
@@ -77,7 +85,9 @@ export default function CreateCourse(props) {
 
 	function handleSubmitNewAuthor(e) {
 		e.preventDefault();
+
 		const authorWithId = { ...newAuthor, id: getNewId() };
+
 		props.setAuthors([...props.authors, authorWithId]);
 		setNewAuthor({
 			name: '',
@@ -96,14 +106,6 @@ export default function CreateCourse(props) {
 		setAuthorsToAdd([...authorsToAdd, author]);
 	}
 
-	function addAuthors() {
-		const updatedAuthors = authorsToRemove.map((author) => author.id);
-		setNewCourse({
-			...newCourse,
-			authors: updatedAuthors,
-		});
-	}
-
 	function handleSubmitCourse(e) {
 		e.preventDefault();
 		if (
@@ -114,6 +116,7 @@ export default function CreateCourse(props) {
 			window.alert('Please fill in all fields');
 		} else {
 			props.setCourses([...props.courses, newCourse]);
+
 			setNewCourse({
 				id: '',
 				title: '',
@@ -122,6 +125,7 @@ export default function CreateCourse(props) {
 				duration: undefined,
 				authors: [],
 			});
+
 			props.toggleCreateCourse();
 		}
 	}
