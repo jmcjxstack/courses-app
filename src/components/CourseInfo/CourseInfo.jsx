@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Button from '../../common/Button/Button';
 
@@ -67,3 +68,22 @@ export default function CourseInfo({ courses, authors }) {
 		</>
 	);
 }
+
+CourseInfo.propTypes = {
+	courses: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			title: PropTypes.string,
+			description: PropTypes.string,
+			creationDate: PropTypes.string,
+			duration: PropTypes.number,
+			authors: PropTypes.arrayOf(PropTypes.string),
+		})
+	),
+	authors: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
+};

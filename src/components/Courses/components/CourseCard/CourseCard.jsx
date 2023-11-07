@@ -1,11 +1,12 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Button from '../../../../common/Button/Button';
-import { getCourseDuration } from '../../../../helpers/getCourseDuration';
-import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 
 import './courseCard.css';
+import { getCourseDuration } from '../../../../helpers/getCourseDuration';
+import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 
 export default function CourseCard({ courses, authors }) {
 	const navigate = useNavigate();
@@ -48,3 +49,22 @@ export default function CourseCard({ courses, authors }) {
 		</>
 	);
 }
+
+CourseCard.propTypes = {
+	courses: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			title: PropTypes.string,
+			description: PropTypes.string,
+			creationDate: PropTypes.string,
+			duration: PropTypes.number,
+			authors: PropTypes.arrayOf(PropTypes.string),
+		})
+	),
+	authors: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
+};

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Input from '../../../../common/Input/Input';
 
@@ -18,3 +19,9 @@ export default function SearchBar(props) {
 		</div>
 	);
 }
+
+SearchBar.propTypes = {
+	handleInputChange: PropTypes.func,
+	value: PropTypes.string,
+	name: PropTypes.string,
+};

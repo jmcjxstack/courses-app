@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
@@ -26,3 +27,22 @@ export default function Courses(props) {
 		</>
 	);
 }
+
+Courses.propTypes = {
+	courses: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			title: PropTypes.string,
+			description: PropTypes.string,
+			creationDate: PropTypes.string,
+			duration: PropTypes.number,
+			authors: PropTypes.arrayOf(PropTypes.string),
+		})
+	),
+	authors: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
+};

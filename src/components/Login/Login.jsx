@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
@@ -78,3 +79,8 @@ export default function Login(props) {
 		</>
 	);
 }
+
+Login.propTypes = {
+	isAuthenticated: PropTypes.bool,
+	setIsAuthenticated: PropTypes.func,
+};

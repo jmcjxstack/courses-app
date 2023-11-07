@@ -1,5 +1,6 @@
 export function formatCreationDate(s) {
-	return `${s.slice(0, 2)}.${s.slice(3, 5)}.${s.slice(8, 10)}`;
+	const formattedString = `${s.slice(0, 2)}.${s.slice(3, 5)}.${s.slice(8, 10)}`;
+	return formattedString;
 }
 
 // export function formatCreationDate(inputDate) {

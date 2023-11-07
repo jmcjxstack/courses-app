@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import PropTypes from 'prop-types';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
@@ -241,3 +242,24 @@ export default function CreateCourse(props) {
 		</>
 	);
 }
+
+CreateCourse.propTypes = {
+	courses: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			title: PropTypes.string,
+			description: PropTypes.string,
+			creationDate: PropTypes.string,
+			duration: PropTypes.number,
+			authors: PropTypes.arrayOf(PropTypes.string),
+		})
+	),
+	authors: PropTypes.arrayOf(
+		PropTypes.shape({
+			id: PropTypes.string,
+			name: PropTypes.string,
+		})
+	),
+	setAuthors: PropTypes.func,
+	setCourses: PropTypes.func,
+};

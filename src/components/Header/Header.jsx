@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
@@ -50,3 +51,8 @@ export default function Header(props) {
 		</div>
 	);
 }
+
+Header.propTypes = {
+	isAuthenticated: PropTypes.bool,
+	setIsAuthenticated: PropTypes.func,
+};
