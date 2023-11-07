@@ -8,8 +8,10 @@ import AuthorItem from './components/AuthorItem/AuthorItem';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 
 import './create-course.css';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateCourse(props) {
+	const navigate = useNavigate();
 	const [newCourse, setNewCourse] = useState({
 		id: '',
 		title: '',
@@ -126,14 +128,13 @@ export default function CreateCourse(props) {
 				duration: undefined,
 				authors: [],
 			});
-
-			props.toggleCreateCourse();
+			navigate('/courses');
 		}
 	}
 
 	return (
 		<>
-			<Header />
+			<Header loginOrRegistration={false} />
 			<form>
 				<div className='top'>
 					<Input

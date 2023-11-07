@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import Header from '../Header/Header';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
 import './registration.css';
+import { API_URL } from '../../constants';
 
 export default function Registration() {
+	const navigate = useNavigate();
 	const [newUser, setNewUser] = useState({
 		name: '',
 		email: '',
@@ -21,13 +24,19 @@ export default function Registration() {
 		});
 	}
 
-	function handleSubmit(e) {
-		console.log(e);
+	async function handleSubmit(e) {
+		e.preventDefault();
+		try {
+			await axios.post(`${API_URL}/register`, newUser);
+			navigate('/login');
+		} catch (error) {
+			console.log(error);
+		}
 	}
 
 	return (
 		<>
-			<Header />
+			<Header loginOrRegistration={true} />
 			<div className='container'>
 				<h3>Registration</h3>
 				<form className='registration-form' onSubmit={(e) => handleSubmit(e)}>

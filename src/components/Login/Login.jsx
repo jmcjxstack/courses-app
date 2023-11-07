@@ -26,8 +26,7 @@ export default function Registration() {
 
 	return (
 		<>
-			<Header />
-
+			<Header loginOrRegistration={true} />
 			<div className='container'>
 				<h3>Login</h3>
 				<form className='login-form' onSubmit={(e) => handleSubmit(e)}>
