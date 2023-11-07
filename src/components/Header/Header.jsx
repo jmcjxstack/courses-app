@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, Link } from 'react-router-dom';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
@@ -30,13 +30,21 @@ export default function Header(props) {
 
 	return (
 		<div className='navbar'>
-			<Logo />
+			<div className='logo'>
+				<Link to={'/courses'}>
+					<Logo />
+				</Link>
+			</div>
 			{!(
 				location.pathname === '/login' || location.pathname === '/registration'
 			) && (
 				<>
 					<h5 className='name'>{nameCapitalized}</h5>
-					<Button className='log-button' buttonName='Logout' onClick={logOut} />
+					<Button
+						className='log-out-button'
+						buttonName='Logout'
+						onClick={logOut}
+					/>
 				</>
 			)}
 		</div>
