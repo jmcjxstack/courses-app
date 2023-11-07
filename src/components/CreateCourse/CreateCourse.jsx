@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 
-import Header from '../Header/Header';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import AuthorItem from './components/AuthorItem/AuthorItem';
-import { getCourseDuration } from '../../helpers/getCourseDuration';
 
+import { getCourseDuration } from '../../helpers/getCourseDuration';
 import './create-course.css';
-import { useNavigate } from 'react-router-dom';
 
 export default function CreateCourse(props) {
 	const navigate = useNavigate();
@@ -134,7 +133,6 @@ export default function CreateCourse(props) {
 
 	return (
 		<>
-			<Header loginOrRegistration={false} />
 			<form>
 				<div className='top'>
 					<Input

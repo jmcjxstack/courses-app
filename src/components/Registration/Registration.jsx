@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-import Header from '../Header/Header';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
@@ -36,7 +35,6 @@ export default function Registration() {
 
 	return (
 		<>
-			<Header loginOrRegistration={true} />
 			<div className='container'>
 				<h3>Registration</h3>
 				<form className='registration-form' onSubmit={(e) => handleSubmit(e)}>
@@ -75,7 +73,7 @@ export default function Registration() {
 					</div>
 				</form>
 				<p>
-					If you have an account you can <Link to='/login'>Login</Link>{' '}
+					If you have an account you can <Link to='/login'>Login</Link>
 				</p>
 			</div>
 		</>

@@ -6,38 +6,70 @@ import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
+import Header from './components/Header/Header';
 
 import { mockedCoursesList, mockedAuthorsList } from './constants';
 
 export default function App() {
 	const [authors, setAuthors] = useState(mockedAuthorsList);
 	const [courses, setCourses] = useState(mockedCoursesList);
+	const [isAuthenticated, setIsAuthenticated] = useState(
+		!!localStorage.getItem('isLoggedIn')
+	);
 
 	return (
 		<>
 			<BrowserRouter>
+				<Header
+					isAuthenticated={isAuthenticated}
+					setIsAuthenticated={(state) => setIsAuthenticated(state)}
+				/>
 				<Routes>
 					<Route path='*' element={<Navigate to='/login' />} />
-					<Route path='/login' element={<Login />} />
+					<Route
+						path='/login'
+						element={
+							<Login
+								isAuthenticated={isAuthenticated}
+								setIsAuthenticated={(state) => setIsAuthenticated(state)}
+							/>
+						}
+					/>
 					<Route path='/registration' element={<Registration />} />
 					<Route
 						path='/courses'
-						element={<Courses courses={courses} authors={authors} />}
+						element={
+							isAuthenticated ? (
+								<Courses courses={courses} authors={authors} />
+							) : (
+								<Navigate to='/login' />
+							)
+						}
 					/>
 					<Route
 						path='/courses/add'
 						element={
-							<CreateCourse
-								authors={authors}
-								courses={courses}
-								setAuthors={(state) => setAuthors(state)}
-								setCourses={(state) => setCourses(state)}
-							/>
+							isAuthenticated ? (
+								<CreateCourse
+									authors={authors}
+									courses={courses}
+									setAuthors={(state) => setAuthors(state)}
+									setCourses={(state) => setCourses(state)}
+								/>
+							) : (
+								<Navigate to='/login' />
+							)
 						}
 					/>
 					<Route
 						path='/courses/:courseId'
-						element={<CourseInfo authors={authors} courses={courses} />}
+						element={
+							isAuthenticated ? (
+								<CourseInfo authors={authors} courses={courses} />
+							) : (
+								<Navigate to='/login' />
+							)
+						}
 					/>
 				</Routes>
 			</BrowserRouter>

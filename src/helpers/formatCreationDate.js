@@ -20,5 +20,7 @@ export function formatCreationDate(s) {
 // }
 
 // const a = '9/3/2021';
+// const b = '09/03/2021';
 
 // console.log(formatCreationDate(a));
+// console.log(formatCreationDate(b));

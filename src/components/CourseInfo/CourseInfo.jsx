@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
-import Header from '../Header/Header';
 import Button from '../../common/Button/Button';
 
 import './course-info.css';
@@ -28,7 +27,6 @@ export default function CourseInfo({ courses, authors }) {
 
 	return (
 		<>
-			<Header loginOrRegistration={false} />
 			<div className='back-to-courses'>
 				<Button
 					buttonName='< Back to courses'
