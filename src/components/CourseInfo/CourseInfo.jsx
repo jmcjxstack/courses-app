@@ -6,7 +6,7 @@ import Button from '../../common/Button/Button';
 
 import './course-info.css';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-import { formatCreationDate } from '../../helpers/formatCreationDate';
+// import { formatCreationDate } from '../../helpers/formatCreationDate';
 
 export default function CourseInfo({ courses, authors }) {
 	const navigate = useNavigate();

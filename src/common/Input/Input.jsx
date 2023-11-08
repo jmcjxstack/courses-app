@@ -1,10 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import './input.css';
+
 export default function Input(props) {
 	return (
 		<>
-			<label htmlFor={props.htmlFor}>{props.labelText}&nbsp;</label>
+			<label htmlFor={props.htmlFor}>{props.labelText}</label>
 			<input
 				id={props.id}
 				placeholder={props.placeholderText}
