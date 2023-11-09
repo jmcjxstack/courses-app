@@ -32,7 +32,6 @@ export default function Login(props) {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
-			// const response = await axios.post(`${API_URL}/login`, loginInfo);
 			const response = await loginUser(loginInfo);
 			const loginData = response.data;
 			localStorage.setItem('isLoggedIn', JSON.stringify(loginData));
