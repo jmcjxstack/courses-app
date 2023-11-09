@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import Button from '../../common/Button/Button';
 
-import './course-info.css';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 // import { formatCreationDate } from '../../helpers/formatCreationDate';
+import './course-info.css';
 
 export default function CourseInfo({ courses, authors }) {
 	const navigate = useNavigate();
