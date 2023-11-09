@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
+import { loginUser } from '../../services';
 import './login.css';
-import { API_URL } from '../../constants';
 
 export default function Login(props) {
 	const navigate = useNavigate();
@@ -33,7 +32,8 @@ export default function Login(props) {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
-			const response = await axios.post(`${API_URL}/login`, loginInfo);
+			// const response = await axios.post(`${API_URL}/login`, loginInfo);
+			const response = await loginUser(loginInfo);
 			const loginData = response.data;
 			localStorage.setItem('isLoggedIn', JSON.stringify(loginData));
 			props.setIsAuthenticated(true);

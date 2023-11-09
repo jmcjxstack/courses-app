@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
+import { registerUser } from '../../services';
 import './registration.css';
-import { API_URL } from '../../constants';
 
 export default function Registration() {
 	const navigate = useNavigate();
@@ -26,7 +25,7 @@ export default function Registration() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
-			await axios.post(`${API_URL}/register`, newUser);
+			await registerUser(newUser);
 			navigate('/login');
 		} catch (error) {
 			console.log(error);
