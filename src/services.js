@@ -2,7 +2,8 @@ import { API_URL } from './constants';
 import axios from 'axios';
 
 export async function registerUser(userInfo) {
-	await axios.post(`${API_URL}/register`, userInfo);
+	const response = await axios.post(`${API_URL}/register`, userInfo);
+	return response;
 }
 
 export async function loginUser(loginInfo) {
