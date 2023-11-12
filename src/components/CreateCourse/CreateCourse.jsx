@@ -49,10 +49,8 @@ export default function CreateCourse(props) {
 		}));
 	}, []);
 
-	//not sure if this effect is necessary but for some reason
-	//adding authors does not work if this effect is missing
-	//it sets the authors to add, tracking the authors, this effect should not be neccesary
-	//try to remove it and see what happens
+	//after testing this effect is actually crucial to
+	//render a newly creted author to be able to add it to a new course
 	useEffect(() => {
 		setAuthorsToAdd(props.authors);
 	}, [props.authors]);
