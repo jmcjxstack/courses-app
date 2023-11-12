@@ -11,9 +11,12 @@ const authorsSlice = createSlice({
 		updateAuthors: (state, action) => {
 			state.authors = action.payload;
 		},
+		addAuthor: (state, action) => {
+			state.authors.push(action.payload);
+		},
 	},
 });
 
-export const { updateAuthors } = authorsSlice.actions;
+export const { updateAuthors, addAuthor } = authorsSlice.actions;
 
 export default authorsSlice.reducer;
