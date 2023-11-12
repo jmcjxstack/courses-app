@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Button from '../../common/Button/Button';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
+import { getCourseById } from '../../store/courses/coursesSelectors';
+import { getAuthors } from '../../store/authors/authorsSelectors';
 import './course-info.css';
 
-export default function CourseInfo({ courses, authors }) {
+export default function CourseInfo() {
 	const navigate = useNavigate();
 	const { courseId } = useParams();
-	const [courseInfo, setCourseInfo] = useState();
-
-	useEffect(() => {
-		getCourseById(courseId);
-	}, []);
-
-	function getCourseById(id) {
-		const course = courses.find((item) => item.id === id);
-		setCourseInfo(course);
-	}
+	const authors = useSelector(getAuthors);
+	const courseInfo = useSelector((state) => getCourseById(state, courseId));
 
 	const authorsList = courseInfo?.authors.map(
 		(authorId) => authors?.find((author) => author.id === authorId).name
@@ -35,21 +29,23 @@ export default function CourseInfo({ courses, authors }) {
 				/>
 			</div>
 			<div className='course-title'>
-				<h1>{courseInfo?.title}</h1>
+				<h1>{courseInfo && courseInfo?.title}</h1>
 			</div>
 
 			<div className='info-container'>
 				<div className='course-description'>
-					<p>{courseInfo?.description}</p>
+					<p>{courseInfo && courseInfo?.description}</p>
 				</div>
 				<div className='course-details'>
 					<p>
 						<b>ID: </b>
-						{courseInfo?.id}
+						{courseInfo && courseInfo?.id}
 					</p>
 					<p>
 						<b>Duration: </b>
-						{getCourseDuration(courseInfo?.duration)}
+						{courseInfo &&
+							courseInfo.duration &&
+							getCourseDuration(courseInfo?.duration)}
 					</p>
 					<p>
 						<b>Created: </b>
@@ -60,31 +56,12 @@ export default function CourseInfo({ courses, authors }) {
 
 					<b>Authors: </b>
 					<div className='course-authors'>
-						{authorsList?.map((author, idx) => (
-							<p key={idx}>{author}</p>
-						))}
+						{courseInfo &&
+							authors &&
+							authorsList?.map((author, idx) => <p key={idx}>{author}</p>)}
 					</div>
 				</div>
 			</div>
 		</>
 	);
 }
-
-CourseInfo.propTypes = {
-	courses: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
-	authors: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-};

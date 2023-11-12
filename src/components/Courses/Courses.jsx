@@ -35,9 +35,6 @@ export default function Courses() {
 		fetchAllAuthors();
 	}, []);
 
-	console.log(courses);
-	console.log(authors);
-
 	return (
 		<>
 			<div className='topbar'>

@@ -58,11 +58,7 @@ export default function App() {
 					<Route
 						path='/courses/:courseId'
 						element={
-							isAuthenticated ? (
-								<CourseInfo authors={authors} courses={courses} />
-							) : (
-								<Navigate to='/login' />
-							)
+							isAuthenticated ? <CourseInfo /> : <Navigate to='/login' />
 						}
 					/>
 				</Routes>
