@@ -37,7 +37,7 @@ export default function Login(props) {
 			localStorage.setItem('isLoggedIn', JSON.stringify(loginData));
 			props.setIsAuthenticated(true);
 		} catch (error) {
-			console.log(error);
+			alert(error);
 		}
 	}
 

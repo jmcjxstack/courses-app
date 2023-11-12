@@ -17,7 +17,7 @@ export default function CreateCourse(props) {
 		title: '',
 		description: '',
 		creationDate: '',
-		duration: undefined,
+		duration: 0,
 		authors: [],
 	});
 
@@ -114,9 +114,10 @@ export default function CreateCourse(props) {
 		if (
 			newCourse.title === '' ||
 			newCourse.description === '' ||
-			newCourse.duration === undefined
+			newCourse.duration === 0 ||
+			newCourse.authors.length === 0
 		) {
-			window.alert('Please fill in all fields');
+			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
 			props.setCourses([...props.courses, newCourse]);
 
@@ -125,7 +126,7 @@ export default function CreateCourse(props) {
 				title: '',
 				description: '',
 				creationDate: '',
-				duration: undefined,
+				duration: 0,
 				authors: [],
 			});
 			navigate('/courses');

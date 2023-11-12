@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import Button from '../../common/Button/Button';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-// import { formatCreationDate } from '../../helpers/formatCreationDate';
+import { formatCreationDate } from '../../helpers/formatCreationDate';
 import './course-info.css';
 
 export default function CourseInfo({ courses, authors }) {
@@ -53,8 +53,9 @@ export default function CourseInfo({ courses, authors }) {
 					</p>
 					<p>
 						<b>Created: </b>
-						{courseInfo?.creationDate}
-						{/* {formatCreationDate(courseInfo?.creationDate)} */}
+						{courseInfo &&
+							courseInfo.creationDate &&
+							formatCreationDate(courseInfo?.creationDate)}
 					</p>
 
 					<b>Authors: </b>

@@ -1,30 +1,15 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { useDispatch, useSelector } from 'react-redux';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
 
 import './courses.css';
-import { getCourses } from '../../store/courses/selectors';
-import { getAllCourses } from '../../services';
-import { saveCoursesAction } from '../../store/courses/actions';
+
 export default function Courses(props) {
 	const navigate = useNavigate();
-	// const dispatch = useDispatch();
-	// const testCourses = useSelector(getCourses);
-
-	// useEffect(() => {
-	// 	async function fetchCourses() {
-	// 		const response = await getAllCourses();
-	// 		console.log(response.data.result);
-	// 		dispatch(saveCoursesAction(response.data.result));
-	// 		console.log(testCourses);
-	// 	}
-	// 	fetchCourses();
-	// }, []);
 
 	return (
 		<>

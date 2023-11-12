@@ -28,7 +28,7 @@ export default function Registration() {
 			await registerUser(newUser);
 			navigate('/login');
 		} catch (error) {
-			console.log(error);
+			alert(error);
 		}
 	}
 
