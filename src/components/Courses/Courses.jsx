@@ -10,13 +10,15 @@ import Button from '../../common/Button/Button';
 import { getAllAuthors, getAllCourses } from '../../services';
 import { updateAuthors } from '../../store/authors/authorsSlice';
 import { updateCourses } from '../../store/courses/coursesSlice';
+import { getCourses } from '../../store/courses/coursesSelectors';
+import { getAuthors } from '../../store/authors/authorsSelectors';
 import './courses.css';
 
 export default function Courses() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const courses = useSelector((state) => state.courses.courses);
-	const authors = useSelector((state) => state.authors.authors);
+	const courses = useSelector(getCourses);
+	const authors = useSelector(getAuthors);
 
 	useEffect(() => {
 		async function fetchAllCourses() {
@@ -32,6 +34,9 @@ export default function Courses() {
 		fetchAllCourses();
 		fetchAllAuthors();
 	}, []);
+
+	console.log(courses);
+	console.log(authors);
 
 	return (
 		<>
