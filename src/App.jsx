@@ -38,13 +38,7 @@ export default function App() {
 					<Route path='/registration' element={<Registration />} />
 					<Route
 						path='/courses'
-						element={
-							isAuthenticated ? (
-								<Courses courses={courses} authors={authors} />
-							) : (
-								<Navigate to='/login' />
-							)
-						}
+						element={isAuthenticated ? <Courses /> : <Navigate to='/login' />}
 					/>
 					<Route
 						path='/courses/add'
