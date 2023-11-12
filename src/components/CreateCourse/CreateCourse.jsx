@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Input from '../../common/Input/Input';
@@ -8,10 +9,13 @@ import Button from '../../common/Button/Button';
 import AuthorItem from './components/AuthorItem/AuthorItem';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
+import { getAuthors } from '../../store/authors/authorsSelectors';
 import './create-course.css';
 
 export default function CreateCourse(props) {
 	const navigate = useNavigate();
+	const authors = useSelector(getAuthors);
+	//new state to handle info about the new course
 	const [newCourse, setNewCourse] = useState({
 		id: '',
 		title: '',
@@ -20,16 +24,20 @@ export default function CreateCourse(props) {
 		duration: 0,
 		authors: [],
 	});
-
+	//new state to handle the new author when you add a new author
 	const [newAuthor, setNewAuthor] = useState({
 		id: '',
 		name: '',
 	});
 
+	//state that is a copy of the authors to be rendered
+	//and manipulated to insert old authors into the next state authorsToRemove
 	const [authorsToAdd, setAuthorsToAdd] = useState(props.authors);
 
+	//state where the old authors are added to a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
+	//this effect creates a new id and a new date and assignñs it to the newCourse state
 	useEffect(() => {
 		const newId = getNewId();
 		const newDate = getNewDate();
@@ -41,10 +49,16 @@ export default function CreateCourse(props) {
 		}));
 	}, []);
 
+	//not sure if this effect is necessary but for some reason
+	//adding authors does not work if this effect is missing
+	//it sets the authors to add, tracking the authors, this effect should not be neccesary
+	//try to remove it and see what happens
 	useEffect(() => {
 		setAuthorsToAdd(props.authors);
 	}, [props.authors]);
 
+	//this effect is necessary, it tracks the authors of the new course
+	//and adds them to the new course
 	useEffect(() => {
 		const authorsList = authorsToRemove.map((author) => author.id);
 
@@ -54,24 +68,24 @@ export default function CreateCourse(props) {
 		}));
 	}, [authorsToRemove]);
 
+	//function that gets the date of creation
 	function getNewDate() {
 		const newDate = new Date();
 		const yyyy = newDate.getFullYear();
 		let mm = newDate.getMonth() + 1;
 		let dd = newDate.getDate();
-
-		if (dd < 10) dd = '0' + dd;
-		if (mm < 10) mm = '0' + mm;
-
 		const formattedDate = `${dd}/${mm}/${yyyy}`;
+
 		return formattedDate;
 	}
 
+	//function to get the new uuid for the new course
 	function getNewId() {
 		const newId = uuidv4();
 		return newId;
 	}
 
+	//function to manage the form input
 	function handleInputChangeNewCourse(e) {
 		setNewCourse({
 			...newCourse,
@@ -79,6 +93,7 @@ export default function CreateCourse(props) {
 		});
 	}
 
+	//function to manage the form input of the new author
 	function handleInputChangeNewAuthorName(e) {
 		setNewAuthor({
 			...newAuthor,
@@ -86,6 +101,7 @@ export default function CreateCourse(props) {
 		});
 	}
 
+	//handles the submit of the form of new author
 	function handleSubmitNewAuthor(e) {
 		e.preventDefault();
 
@@ -97,18 +113,21 @@ export default function CreateCourse(props) {
 		});
 	}
 
+	//handles click of button to add author to new course
 	function handleAddAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToAdd(authorsToAdd.filter((a) => a.id !== author.id));
 		setAuthorsToRemove([...authorsToRemove, author]);
 	}
 
+	//handles click of button to remove author from new course
 	function handleRemoveAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToRemove(authorsToRemove.filter((a) => a.id !== author.id));
 		setAuthorsToAdd([...authorsToAdd, author]);
 	}
 
+	//handles submit of new course
 	function handleSubmitCourse(e) {
 		e.preventDefault();
 		if (
@@ -120,7 +139,6 @@ export default function CreateCourse(props) {
 			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
 			props.setCourses([...props.courses, newCourse]);
-
 			setNewCourse({
 				id: '',
 				title: '',
