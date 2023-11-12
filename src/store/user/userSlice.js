@@ -9,7 +9,7 @@ const userInitialState = {
 
 const userSlice = createSlice({
 	name: 'user',
-	userInitialState,
+	initialState: userInitialState,
 	reducers: {},
 });
 

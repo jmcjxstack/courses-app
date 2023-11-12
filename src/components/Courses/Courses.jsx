@@ -16,7 +16,6 @@ export default function Courses(props) {
 			<div className='topbar'>
 				<SearchBar />
 				<Button buttonName='Search' />
-				{/* {testCourses} */}
 				<div className='new-course-button'>
 					<Button
 						buttonName='Add new course'

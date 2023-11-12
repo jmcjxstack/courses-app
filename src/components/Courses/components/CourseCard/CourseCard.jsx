@@ -1,15 +1,37 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Button from '../../../../common/Button/Button';
 
-import './courseCard.css';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
+import { getAllAuthors, getAllCourses } from '../../../../services';
+import { updateAuthors } from '../../../../store/authors/authorsSlice';
+import { updateCourses } from '../../../../store/courses/coursesSlice';
+import './courseCard.css';
 
 export default function CourseCard({ courses, authors }) {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const testAuthors = useSelector((state) => state.authors.authors);
+	const testCourses = useSelector((state) => state.courses.courses);
+
+	useEffect(() => {
+		async function fetchAllCourses() {
+			const coursesResponse = await getAllCourses();
+			const coursesArray = coursesResponse.data.result;
+			dispatch(updateCourses(coursesArray));
+		}
+		async function fetchAllAuthors() {
+			const authorsResponse = await getAllAuthors();
+			const authorsArray = authorsResponse.data.result;
+			dispatch(updateAuthors(authorsArray));
+		}
+		fetchAllCourses();
+		fetchAllAuthors();
+	}, []);
 
 	return (
 		<>

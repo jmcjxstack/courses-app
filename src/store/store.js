@@ -8,6 +8,6 @@ export const store = configureStore({
 	reducer: {
 		authors: authorsReducer,
 		courses: coursesReducer,
-		user: userReducer,
+		// user: userReducer,
 	},
 });
