@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Input from '../../common/Input/Input';
@@ -9,11 +9,15 @@ import Button from '../../common/Button/Button';
 import AuthorItem from './components/AuthorItem/AuthorItem';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
+import { getCourses } from '../../store/courses/coursesSelectors';
 import { getAuthors } from '../../store/authors/authorsSelectors';
 import './create-course.css';
+import { addCourse } from '../../store/courses/coursesSlice';
+import { addAuthor } from '../../store/authors/authorsSlice';
 
 export default function CreateCourse(props) {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
 	//new state to handle info about the new course
 	const [newCourse, setNewCourse] = useState({
@@ -32,7 +36,7 @@ export default function CreateCourse(props) {
 
 	//state that is a copy of the authors to be rendered
 	//and manipulated to insert old authors into the next state authorsToRemove
-	const [authorsToAdd, setAuthorsToAdd] = useState(props.authors);
+	const [authorsToAdd, setAuthorsToAdd] = useState(authors);
 
 	//state where the old authors are added to a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
@@ -52,8 +56,8 @@ export default function CreateCourse(props) {
 	//after testing this effect is actually crucial to
 	//render a newly creted author to be able to add it to a new course
 	useEffect(() => {
-		setAuthorsToAdd(props.authors);
-	}, [props.authors]);
+		setAuthorsToAdd(authors);
+	}, [authors]);
 
 	//this effect is necessary, it tracks the authors of the new course
 	//and adds them to the new course
@@ -104,8 +108,8 @@ export default function CreateCourse(props) {
 		e.preventDefault();
 
 		const authorWithId = { ...newAuthor, id: getNewId() };
-
-		props.setAuthors([...props.authors, authorWithId]);
+		dispatch(addAuthor(authorWithId));
+		// props.setAuthors([...props.authors, authorWithId]);
 		setNewAuthor({
 			name: '',
 		});
@@ -136,7 +140,8 @@ export default function CreateCourse(props) {
 		) {
 			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
-			props.setCourses([...props.courses, newCourse]);
+			dispatch(addCourse(newCourse));
+			// props.setCourses([...props.courses, newCourse]);
 			setNewCourse({
 				id: '',
 				title: '',

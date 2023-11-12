@@ -10,6 +10,7 @@ import './courseCard.css';
 
 export default function CourseCard({ courses, authors }) {
 	const navigate = useNavigate();
+	console.log(courses);
 
 	return (
 		<>
