@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { useLocation, Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 
+import { resetUser } from '../../store/user/userSlice';
+import { getUserName } from '../../store/user/userSelectors';
 import './header.css';
 
-export default function Header(props) {
-	const [userName, setUserName] = useState('');
-	const navigate = useNavigate();
+export default function Header() {
 	const location = useLocation();
-
-	useEffect(() => {
-		if (props.isAuthenticated) {
-			const userString = localStorage.getItem('isLoggedIn');
-			const userObject = JSON.parse(userString);
-			setUserName(userObject.user.name);
-		} else {
-			navigate('/login');
-		}
-	}, [props.isAuthenticated]);
+	const dispatch = useDispatch();
+	const userName = useSelector(getUserName);
 
 	function logOut() {
-		props.setIsAuthenticated(false);
-		localStorage.removeItem('isLoggedIn');
+		dispatch(resetUser());
+		localStorage.removeItem('isAuth');
 	}
 
 	const nameCapitalized = userName.charAt(0).toUpperCase() + userName.slice(1);
@@ -51,8 +43,3 @@ export default function Header(props) {
 		</div>
 	);
 }
-
-Header.propTypes = {
-	isAuthenticated: PropTypes.bool,
-	setIsAuthenticated: PropTypes.func,
-};

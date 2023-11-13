@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
 import { loginUser } from '../../services';
+import { updateUser } from '../../store/user/userSlice';
+import { getAuthState } from '../../store/user/userSelectors';
 import './login.css';
 
-export default function Login(props) {
+export default function Login() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+	const isAuthenticated = useSelector(getAuthState);
 
 	useEffect(() => {
-		if (props.isAuthenticated) {
+		if (isAuthenticated) {
 			navigate('/courses');
 		}
-	}, [props.isAuthenticated]);
+	}, [isAuthenticated, navigate]);
 
 	const [loginInfo, setLoginInfo] = useState({
 		email: '',
@@ -34,8 +38,8 @@ export default function Login(props) {
 		try {
 			const response = await loginUser(loginInfo);
 			const loginData = response.data;
-			localStorage.setItem('isLoggedIn', JSON.stringify(loginData));
-			props.setIsAuthenticated(true);
+			localStorage.setItem('isAuth', JSON.stringify(loginData));
+			dispatch(updateUser(loginData));
 		} catch (error) {
 			alert(error);
 		}
@@ -78,8 +82,3 @@ export default function Login(props) {
 		</>
 	);
 }
-
-Login.propTypes = {
-	isAuthenticated: PropTypes.bool,
-	setIsAuthenticated: PropTypes.func,
-};

@@ -1,5 +1,5 @@
-import { useState } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Courses from './components/Courses/Courses';
 import Registration from './components/Registration/Registration';
@@ -8,29 +8,18 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Header from './components/Header/Header';
 
+import { getAuthState } from './store/user/userSelectors';
+
 export default function App() {
-	const [isAuthenticated, setIsAuthenticated] = useState(
-		!!localStorage.getItem('isLoggedIn')
-	);
+	const isAuthenticated = useSelector(getAuthState);
 
 	return (
 		<>
 			<BrowserRouter>
-				<Header
-					isAuthenticated={isAuthenticated}
-					setIsAuthenticated={(state) => setIsAuthenticated(state)}
-				/>
+				<Header />
 				<Routes>
 					<Route path='*' element={<Navigate to='/login' />} />
-					<Route
-						path='/login'
-						element={
-							<Login
-								isAuthenticated={isAuthenticated}
-								setIsAuthenticated={(state) => setIsAuthenticated(state)}
-							/>
-						}
-					/>
+					<Route path='/login' element={<Login />} />
 					<Route path='/registration' element={<Registration />} />
 					<Route
 						path='/courses'

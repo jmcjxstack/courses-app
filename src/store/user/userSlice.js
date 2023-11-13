@@ -10,7 +10,18 @@ const userInitialState = {
 const userSlice = createSlice({
 	name: 'user',
 	initialState: userInitialState,
-	reducers: {},
+	reducers: {
+		updateUser: (state, action) => {
+			const { result, user } = action.payload;
+			state.isAuth = true;
+			state.name = user.name;
+			state.email = user.email;
+			state.token = result;
+		},
+		resetUser: () => userInitialState,
+	},
 });
+
+export const { updateUser, resetUser } = userSlice.actions;
 
 export default userSlice.reducer;
