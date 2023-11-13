@@ -6,9 +6,31 @@
     margin-bottom: 20px;
 }
 
+.title-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.title-input label{
+    margin-bottom: 5px;
+}
+
+.title-input input{
+    border: 1px solid orange;
+    height: 25px;
+    width: 500px;
+}
+
 .create-course-button {
+    margin-top: 25px;
     margin-left: auto;
     margin-right: 10px;
+}
+
+.create-course-button button{
+    border: 1px solid purple;
+    width: 120px;
+    height: 30px;
 }
 
 .textarea {
@@ -20,11 +42,14 @@
 
 .textarea textarea {
     resize: none;
+    border: 1px solid #ffd500;
+    margin-top: 5px    
 }
 
 .bottom {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     border: 1px black solid;
     margin: 20px;
 }
@@ -40,33 +65,46 @@
 
 .author-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: column;    
     padding: 20px;
 }
 
 .author-info label {
-    margin-bottom: 0px;
+    margin-bottom: 5px;
     margin-left: 0px;
 }
 
 .author-info input {
+    border: 1px solid orange;
     margin-top: 0px;
     width: 500px;
     margin-bottom: 20px;
 }
 
 .author-info button {
+    border: 1px solid purple;
     margin-left: 40%;
-    width: 100px;
+    width: 120px;
+    height: 30px;
 }
 
-.add-author {
+.add-remove-author {
     display: flex;
     flex-direction: column;
-    margin-top: 20px;
-    margin-left: 200px;
+    margin: 20px auto;
 }
 
-.course-author{
-    text-align: center;
+.author-list p{
+    text-align: left;    
+}
+
+.empty-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.author-info .duration {
+    font-size: 25px;
+    text-align: start;
 }
