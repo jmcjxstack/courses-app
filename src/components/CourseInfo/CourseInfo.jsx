@@ -21,47 +21,49 @@ export default function CourseInfo() {
 	);
 
 	return (
-		<>
-			<div className='back-to-courses'>
-				<Button
-					buttonName='< Back to courses'
-					onClick={() => navigate('/courses')}
-				/>
-			</div>
-			<div className='course-title'>
-				<h1>{courseInfo && courseInfo?.title}</h1>
-			</div>
-
-			<div className='info-container'>
-				<div className='course-description'>
-					<p>{courseInfo && courseInfo?.description}</p>
+		<div className='course-info-container'>
+			<div className='course-info'>
+				<div className='back-to-courses'>
+					<Button
+						buttonName='< Back to courses'
+						onClick={() => navigate('/courses')}
+					/>
 				</div>
-				<div className='course-details'>
-					<p>
-						<b>ID: </b>
-						{courseInfo && courseInfo?.id}
-					</p>
-					<p>
-						<b>Duration: </b>
-						{courseInfo &&
-							courseInfo.duration &&
-							getCourseDuration(courseInfo?.duration)}
-					</p>
-					<p>
-						<b>Created: </b>
-						{courseInfo &&
-							courseInfo.creationDate &&
-							formatCreationDate(courseInfo?.creationDate)}
-					</p>
+				<div className='course-title'>
+					<h1>{courseInfo && courseInfo?.title}</h1>
+				</div>
 
-					<b>Authors: </b>
-					<div className='course-authors'>
-						{courseInfo &&
-							authors &&
-							authorsList?.map((author, idx) => <p key={idx}>{author}</p>)}
+				<div className='info-container'>
+					<div className='course-description'>
+						<p>{courseInfo && courseInfo?.description}</p>
+					</div>
+					<div className='course-details'>
+						<p>
+							<b>ID: </b>
+							{courseInfo && courseInfo?.id}
+						</p>
+						<p>
+							<b>Duration: </b>
+							{courseInfo &&
+								courseInfo.duration &&
+								getCourseDuration(courseInfo?.duration)}
+						</p>
+						<p>
+							<b>Created: </b>
+							{courseInfo &&
+								courseInfo.creationDate &&
+								formatCreationDate(courseInfo?.creationDate)}
+						</p>
+
+						<b>Authors: </b>
+						<div className='course-authors'>
+							{courseInfo &&
+								authors &&
+								authorsList?.map((author, idx) => <p key={idx}>{author}</p>)}
+						</div>
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

@@ -41,9 +41,9 @@ export default function Registration() {
 	}
 
 	return (
-		<>
-			<div className='container'>
-				<h3>Registration</h3>
+		<div className='registration-container'>
+			<div className='registration'>
+				<p className='registration-title'>Registration</p>
 				<form className='registration-form' onSubmit={(e) => handleSubmit(e)}>
 					<Input
 						placeholderText='Enter name'
@@ -83,6 +83,6 @@ export default function Registration() {
 					If you have an account you can <Link to='/login'>Login</Link>
 				</p>
 			</div>
-		</>
+		</div>
 	);
 }

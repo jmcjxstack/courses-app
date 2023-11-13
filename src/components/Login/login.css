@@ -1,12 +1,24 @@
-.container {
+.login-container {
+    padding-top: 5px;
+    padding-bottom: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.login {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    border: 1px solid blue;
+    height: 75vh;
+}
+
+.login-title{
+    font-size: 20px;
 }
 
 .login-form {
-    margin-top: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;

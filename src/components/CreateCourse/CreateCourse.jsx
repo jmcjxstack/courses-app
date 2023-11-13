@@ -142,17 +142,19 @@ export default function CreateCourse() {
 		<>
 			<form>
 				<div className='top'>
-					<Input
-						placeholderText='Enter title'
-						onChange={(e) => handleInputChangeNewCourse(e)}
-						labelText='Title:'
-						htmlFor='title'
-						type='text'
-						name='title'
-						value={newCourse.title}
-						id='title'
-						required={true}
-					/>
+					<div className='title-input'>
+						<Input
+							placeholderText='Enter title'
+							onChange={(e) => handleInputChangeNewCourse(e)}
+							labelText='Title'
+							htmlFor='title'
+							type='text'
+							name='title'
+							value={newCourse.title}
+							id='title'
+							required={true}
+						/>
+					</div>
 					<div className='create-course-button'>
 						<Button
 							buttonName='Create Course'
@@ -161,7 +163,7 @@ export default function CreateCourse() {
 					</div>
 				</div>
 				<div className='textarea'>
-					<label htmlFor='description'>Description:</label>
+					<label htmlFor='description'>Description</label>
 					<textarea
 						placeholder='Enter description'
 						onChange={(e) => handleInputChangeNewCourse(e)}
@@ -176,13 +178,11 @@ export default function CreateCourse() {
 				<div className='bottom'>
 					<div className='info'>
 						<div className='author-info'>
-							<p>
-								<b>Author info</b>
-							</p>
+							<p>Add author</p>
 							<Input
 								placeholderText='Enter author name'
 								onChange={(e) => handleInputChangeNewAuthorName(e)}
-								labelText='Author name:'
+								labelText='Author name'
 								htmlFor='author-name'
 								type='text'
 								name='name'
@@ -196,13 +196,11 @@ export default function CreateCourse() {
 							/>
 						</div>
 						<div className='author-info'>
-							<p>
-								<b>Duration</b>
-							</p>
+							<p>Duration</p>
 							<Input
 								placeholderText='Enter duration in minutes'
 								onChange={(e) => handleInputChangeNewCourse(e)}
-								labelText='Duration:'
+								labelText='Duration'
 								htmlFor='duration'
 								type='text'
 								name='duration'
@@ -210,38 +208,44 @@ export default function CreateCourse() {
 								id='duration'
 								required={true}
 							/>
-							<h3>Duration: {getCourseDuration(newCourse.duration)}</h3>
+							<p className='duration'>
+								Duration: {getCourseDuration(newCourse.duration)}
+							</p>
 						</div>
 					</div>
 					<div className='add-remove-author'>
-						<p>
-							<b>Authors</b>
-						</p>
-						{authorsToAdd.map((author) => (
-							<AuthorItem
-								key={author.id}
-								id={author.id}
-								name={author.name}
-								buttonName='Add author'
-								onClick={(e) => handleAddAuthor(e, author)}
-							/>
-						))}
-						<p>
-							<b>Course Authors</b>
-						</p>
-						{authorsToRemove.length === 0 ? (
-							<p>Author list is empty</p>
-						) : (
-							authorsToRemove.map((author) => (
-								<AuthorItem
-									key={author.id}
-									id={author.id}
-									name={author.name}
-									buttonName='Delete author'
-									onClick={(e) => handleRemoveAuthor(e, author)}
-								/>
-							))
-						)}
+						<p>Authors</p>
+						<div className='author-list'>
+							{authorsToAdd.length === 0 ? (
+								<p className='empty-list'>Author list is empty</p>
+							) : (
+								authorsToAdd.map((author) => (
+									<AuthorItem
+										key={author.id}
+										id={author.id}
+										name={author.name}
+										buttonName='Add author'
+										onClick={(e) => handleAddAuthor(e, author)}
+									/>
+								))
+							)}
+						</div>
+						<p>Course Authors</p>
+						<div className='author-list'>
+							{authorsToRemove.length === 0 ? (
+								<p className='empty-list'>Author list is empty</p>
+							) : (
+								authorsToRemove.map((author) => (
+									<AuthorItem
+										key={author.id}
+										id={author.id}
+										name={author.name}
+										buttonName='Delete author'
+										onClick={(e) => handleRemoveAuthor(e, author)}
+									/>
+								))
+							)}
+						</div>
 					</div>
 				</div>
 			</form>

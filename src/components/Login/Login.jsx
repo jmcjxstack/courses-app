@@ -45,9 +45,9 @@ export default function Login() {
 	}
 
 	return (
-		<>
-			<div className='container'>
-				<h3>Login</h3>
+		<div className='login-container'>
+			<div className='login'>
+				<p className='login-title'>Login</p>
 				<form className='login-form' onSubmit={(e) => handleSubmit(e)}>
 					<Input
 						placeholderText='Enter email'
@@ -78,6 +78,6 @@ export default function Login() {
 					<Link to='/registration'>Registration</Link>{' '}
 				</p>
 			</div>
-		</>
+		</div>
 	);
 }
