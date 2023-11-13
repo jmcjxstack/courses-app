@@ -1,17 +1,22 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import PropTypes from 'prop-types';
 
 import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
 
 import { getAllAuthors, getAllCourses } from '../../services';
-import { updateAuthors } from '../../store/authors/authorsSlice';
-import { updateCourses } from '../../store/courses/coursesSlice';
-import { getCourses } from '../../store/courses/coursesSelectors';
-import { getAuthors } from '../../store/authors/authorsSelectors';
+import { setAuthors } from '../../store/authors/authorsSlice';
+import { setCourses } from '../../store/courses/coursesSlice';
+import {
+	getCourses,
+	isCoursesFetched,
+} from '../../store/courses/coursesSelectors';
+import {
+	getAuthors,
+	isAuthorsFetched,
+} from '../../store/authors/authorsSelectors';
 import './courses.css';
 
 export default function Courses() {
@@ -19,21 +24,27 @@ export default function Courses() {
 	const dispatch = useDispatch();
 	const courses = useSelector(getCourses);
 	const authors = useSelector(getAuthors);
+	const isCoursesDataFetched = useSelector(isCoursesFetched);
+	const isAuthorsDataFetched = useSelector(isAuthorsFetched);
 
 	useEffect(() => {
 		async function fetchAllCourses() {
 			const coursesResponse = await getAllCourses();
 			const coursesArray = coursesResponse.data.result;
-			dispatch(updateCourses(coursesArray));
+			dispatch(setCourses(coursesArray));
 		}
 		async function fetchAllAuthors() {
 			const authorsResponse = await getAllAuthors();
 			const authorsArray = authorsResponse.data.result;
-			dispatch(updateAuthors(authorsArray));
+			dispatch(setAuthors(authorsArray));
 		}
-		fetchAllCourses();
-		fetchAllAuthors();
-	}, []);
+		if (!isCoursesDataFetched) {
+			fetchAllCourses();
+		}
+		if (!isAuthorsDataFetched) {
+			fetchAllAuthors();
+		}
+	}, [isCoursesDataFetched, isAuthorsDataFetched, dispatch]);
 
 	return (
 		<>
@@ -51,22 +62,3 @@ export default function Courses() {
 		</>
 	);
 }
-
-// Courses.propTypes = {
-// 	courses: PropTypes.arrayOf(
-// 		PropTypes.shape({
-// 			id: PropTypes.string,
-// 			title: PropTypes.string,
-// 			description: PropTypes.string,
-// 			creationDate: PropTypes.string,
-// 			duration: PropTypes.number,
-// 			authors: PropTypes.arrayOf(PropTypes.string),
-// 		})
-// 	),
-// 	authors: PropTypes.arrayOf(
-// 		PropTypes.shape({
-// 			id: PropTypes.string,
-// 			name: PropTypes.string,
-// 		})
-// 	),
-// };

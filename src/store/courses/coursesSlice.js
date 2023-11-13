@@ -2,14 +2,16 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const coursesInitialState = {
 	courses: [],
+	isDataFetched: false,
 };
 
 const coursesSlice = createSlice({
 	name: 'courses',
 	initialState: coursesInitialState,
 	reducers: {
-		updateCourses: (state, action) => {
+		setCourses: (state, action) => {
 			state.courses = action.payload;
+			state.isDataFetched = true;
 		},
 		addCourse: (state, action) => {
 			state.courses.push(action.payload);
@@ -17,6 +19,6 @@ const coursesSlice = createSlice({
 	},
 });
 
-export const { updateCourses, addCourse } = coursesSlice.actions;
+export const { setCourses, addCourse } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

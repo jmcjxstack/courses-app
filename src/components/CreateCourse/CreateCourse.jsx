@@ -9,17 +9,16 @@ import Button from '../../common/Button/Button';
 import AuthorItem from './components/AuthorItem/AuthorItem';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
-import { getCourses } from '../../store/courses/coursesSelectors';
 import { getAuthors } from '../../store/authors/authorsSelectors';
-import './create-course.css';
 import { addCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
+import './create-course.css';
 
-export default function CreateCourse(props) {
+export default function CreateCourse() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
-	//new state to handle info about the new course
+
 	const [newCourse, setNewCourse] = useState({
 		id: '',
 		title: '',
@@ -28,20 +27,16 @@ export default function CreateCourse(props) {
 		duration: 0,
 		authors: [],
 	});
-	//new state to handle the new author when you add a new author
+
 	const [newAuthor, setNewAuthor] = useState({
 		id: '',
 		name: '',
 	});
 
-	//state that is a copy of the authors to be rendered
-	//and manipulated to insert old authors into the next state authorsToRemove
 	const [authorsToAdd, setAuthorsToAdd] = useState(authors);
 
-	//state where the old authors are added to a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
-	//this effect creates a new id and a new date and assignñs it to the newCourse state
 	useEffect(() => {
 		const newId = getNewId();
 		const newDate = getNewDate();
@@ -53,14 +48,10 @@ export default function CreateCourse(props) {
 		}));
 	}, []);
 
-	//after testing this effect is actually crucial to
-	//render a newly creted author to be able to add it to a new course
 	useEffect(() => {
 		setAuthorsToAdd(authors);
 	}, [authors]);
 
-	//this effect is necessary, it tracks the authors of the new course
-	//and adds them to the new course
 	useEffect(() => {
 		const authorsList = authorsToRemove.map((author) => author.id);
 
@@ -70,7 +61,6 @@ export default function CreateCourse(props) {
 		}));
 	}, [authorsToRemove]);
 
-	//function that gets the date of creation
 	function getNewDate() {
 		const newDate = new Date();
 		const yyyy = newDate.getFullYear();
@@ -81,13 +71,11 @@ export default function CreateCourse(props) {
 		return formattedDate;
 	}
 
-	//function to get the new uuid for the new course
 	function getNewId() {
 		const newId = uuidv4();
 		return newId;
 	}
 
-	//function to manage the form input
 	function handleInputChangeNewCourse(e) {
 		setNewCourse({
 			...newCourse,
@@ -95,7 +83,6 @@ export default function CreateCourse(props) {
 		});
 	}
 
-	//function to manage the form input of the new author
 	function handleInputChangeNewAuthorName(e) {
 		setNewAuthor({
 			...newAuthor,
@@ -103,33 +90,28 @@ export default function CreateCourse(props) {
 		});
 	}
 
-	//handles the submit of the form of new author
 	function handleSubmitNewAuthor(e) {
 		e.preventDefault();
 
 		const authorWithId = { ...newAuthor, id: getNewId() };
 		dispatch(addAuthor(authorWithId));
-		// props.setAuthors([...props.authors, authorWithId]);
 		setNewAuthor({
 			name: '',
 		});
 	}
 
-	//handles click of button to add author to new course
 	function handleAddAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToAdd(authorsToAdd.filter((a) => a.id !== author.id));
 		setAuthorsToRemove([...authorsToRemove, author]);
 	}
 
-	//handles click of button to remove author from new course
 	function handleRemoveAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToRemove(authorsToRemove.filter((a) => a.id !== author.id));
 		setAuthorsToAdd([...authorsToAdd, author]);
 	}
 
-	//handles submit of new course
 	function handleSubmitCourse(e) {
 		e.preventDefault();
 		if (
@@ -141,7 +123,6 @@ export default function CreateCourse(props) {
 			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
 			dispatch(addCourse(newCourse));
-			// props.setCourses([...props.courses, newCourse]);
 			setNewCourse({
 				id: '',
 				title: '',
@@ -163,7 +144,7 @@ export default function CreateCourse(props) {
 						onChange={(e) => handleInputChangeNewCourse(e)}
 						labelText='Title:'
 						htmlFor='title'
-						type={'text'}
+						type='text'
 						name='title'
 						value={newCourse.title}
 						id='title'
@@ -200,7 +181,7 @@ export default function CreateCourse(props) {
 								onChange={(e) => handleInputChangeNewAuthorName(e)}
 								labelText='Author name:'
 								htmlFor='author-name'
-								type={'text'}
+								type='text'
 								name='name'
 								value={newAuthor.name}
 								id='author-name'
@@ -220,7 +201,7 @@ export default function CreateCourse(props) {
 								onChange={(e) => handleInputChangeNewCourse(e)}
 								labelText='Duration:'
 								htmlFor='duration'
-								type={'text'}
+								type='text'
 								name='duration'
 								value={newCourse.duration || ''}
 								id='duration'
@@ -264,24 +245,3 @@ export default function CreateCourse(props) {
 		</>
 	);
 }
-
-CreateCourse.propTypes = {
-	courses: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
-	authors: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-	setAuthors: PropTypes.func,
-	setCourses: PropTypes.func,
-};
