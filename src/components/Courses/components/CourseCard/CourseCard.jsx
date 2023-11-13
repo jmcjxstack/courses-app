@@ -47,14 +47,8 @@ export default function CourseCard({ courses, authors }) {
 									buttonName='Show Course'
 									onClick={() => navigate(`/courses/${course.id}`)}
 								/>
-								<Button
-									buttonName='Edit'
-									onClick={() => console.log('edit course')}
-								/>
-								<Button
-									buttonName='Delete'
-									onClick={() => console.log('deleted course')}
-								/>
+								<Button buttonName='Edit' />
+								<Button buttonName='Delete' />
 							</div>
 						</div>
 					</div>

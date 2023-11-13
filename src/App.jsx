@@ -8,11 +8,7 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Header from './components/Header/Header';
 
-import { mockedCoursesList, mockedAuthorsList } from './constants';
-
 export default function App() {
-	const [authors, setAuthors] = useState(mockedAuthorsList);
-	const [courses, setCourses] = useState(mockedCoursesList);
 	const [isAuthenticated, setIsAuthenticated] = useState(
 		!!localStorage.getItem('isLoggedIn')
 	);
@@ -43,16 +39,7 @@ export default function App() {
 					<Route
 						path='/courses/add'
 						element={
-							isAuthenticated ? (
-								<CreateCourse
-									authors={authors}
-									courses={courses}
-									setAuthors={(state) => setAuthors(state)}
-									setCourses={(state) => setCourses(state)}
-								/>
-							) : (
-								<Navigate to='/login' />
-							)
+							isAuthenticated ? <CreateCourse /> : <Navigate to='/login' />
 						}
 					/>
 					<Route

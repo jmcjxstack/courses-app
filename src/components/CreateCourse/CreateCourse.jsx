@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
@@ -77,9 +76,13 @@ export default function CreateCourse() {
 	}
 
 	function handleInputChangeNewCourse(e) {
+		const updatedValue =
+			e.target.name === 'duration'
+				? parseInt(e.target.value, 10)
+				: e.target.value;
 		setNewCourse({
 			...newCourse,
-			[e.target.name]: e.target.value,
+			[e.target.name]: updatedValue,
 		});
 	}
 
