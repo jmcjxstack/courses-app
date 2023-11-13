@@ -49,8 +49,10 @@ export default function Courses() {
 	return (
 		<>
 			<div className='topbar'>
-				<SearchBar />
-				<Button buttonName='Search' />
+				<div className='searchbar'>
+					<SearchBar />
+					<Button buttonName='Search' />
+				</div>
 				<div className='new-course-button'>
 					<Button
 						buttonName='Add new course'

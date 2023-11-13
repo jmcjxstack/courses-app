@@ -3,8 +3,11 @@
     flex-direction: row;
     padding: 20px;
     align-items: center;
-    border: 1px solid black;
-    margin: 5px;
+    border: 1px solid green;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 15px;
 }
 
 .course-info-left {
@@ -29,4 +32,13 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+}
+
+.show-button button{
+    border: 1px solid purple;
+    margin-right: 1px;
+}
+
+.show-button button:first-child{
+    width: 150px;
 }

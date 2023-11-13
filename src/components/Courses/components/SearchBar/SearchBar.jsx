@@ -7,9 +7,8 @@ export default function SearchBar(props) {
 	return (
 		<div>
 			<Input
-				placeholderText='Search for a course'
+				placeholderText='Enter course name or id'
 				onChange={props.handleInputChange}
-				labelText='Search for a course:'
 				htmlFor='searchbar'
 				type={'text'}
 				name={props.name}

@@ -7,8 +7,8 @@ import Button from '../../../../common/Button/Button';
 
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
-import './courseCard.css';
 import { deleteCourse } from '../../../../store/courses/coursesSlice';
+import './courseCard.css';
 
 export default function CourseCard({ courses, authors }) {
 	const navigate = useNavigate();
@@ -54,9 +54,9 @@ export default function CourseCard({ courses, authors }) {
 									buttonName='Show Course'
 									onClick={() => navigate(`/courses/${course.id}`)}
 								/>
-								<Button buttonName='Edit' />
+								<Button buttonName='🖊️' />
 								<Button
-									buttonName='Delete'
+									buttonName='🗑️'
 									onClick={() => handleDelete(course.id)}
 								/>
 							</div>

@@ -32,12 +32,12 @@
     flex-direction: column;
 }
 
-.course-details>p:first-child {
+.course-details > p:first-child {
     margin-top: 16px;
     margin-bottom: 10px;
 }
 
-.course-details>p {
+.course-details > p {
     margin-top: 10px;
     margin-bottom: 10px;
 }
