@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import Button from '../../../../common/Button/Button';
@@ -7,9 +8,15 @@ import Button from '../../../../common/Button/Button';
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 import './courseCard.css';
+import { deleteCourse } from '../../../../store/courses/coursesSlice';
 
 export default function CourseCard({ courses, authors }) {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	function handleDelete(courseId) {
+		dispatch(deleteCourse(courseId));
+	}
 
 	return (
 		<>
@@ -48,7 +55,10 @@ export default function CourseCard({ courses, authors }) {
 									onClick={() => navigate(`/courses/${course.id}`)}
 								/>
 								<Button buttonName='Edit' />
-								<Button buttonName='Delete' />
+								<Button
+									buttonName='Delete'
+									onClick={() => handleDelete(course.id)}
+								/>
 							</div>
 						</div>
 					</div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Input from '../../common/Input/Input';
@@ -9,11 +9,19 @@ import './registration.css';
 
 export default function Registration() {
 	const navigate = useNavigate();
+	const isAuthenticated = !!localStorage.getItem('isAuth');
+
 	const [newUser, setNewUser] = useState({
 		name: '',
 		email: '',
 		password: '',
 	});
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate('/courses');
+		}
+	}, [isAuthenticated, navigate]);
 
 	function handleInputChange(e) {
 		setNewUser({

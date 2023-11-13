@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
 import { loginUser } from '../../services';
 import { updateUser } from '../../store/user/userSlice';
-import { getAuthState } from '../../store/user/userSelectors';
 import './login.css';
 
 export default function Login() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const isAuthenticated = useSelector(getAuthState);
+	const isAuthenticated = !!localStorage.getItem('isAuth');
 
 	useEffect(() => {
 		if (isAuthenticated) {
@@ -38,8 +37,8 @@ export default function Login() {
 		try {
 			const response = await loginUser(loginInfo);
 			const loginData = response.data;
-			localStorage.setItem('isAuth', JSON.stringify(loginData));
 			dispatch(updateUser(loginData));
+			navigate('/courses');
 		} catch (error) {
 			alert(error);
 		}

@@ -27,7 +27,7 @@ Input.propTypes = {
 	placeholderText: PropTypes.string,
 	onChange: PropTypes.func,
 	type: PropTypes.string,
-	value: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	name: PropTypes.string,
 	required: PropTypes.bool,
 };

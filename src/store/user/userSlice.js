@@ -17,8 +17,15 @@ const userSlice = createSlice({
 			state.name = user.name;
 			state.email = user.email;
 			state.token = result;
+			localStorage.setItem('isAuth', result);
 		},
-		resetUser: () => userInitialState,
+		resetUser: (state) => {
+			state.isAuth = false;
+			state.name = '';
+			state.email = '';
+			state.token = '';
+			localStorage.removeItem('isAuth');
+		},
 	},
 });
 

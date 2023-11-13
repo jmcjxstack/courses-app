@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import Courses from './components/Courses/Courses';
 import Registration from './components/Registration/Registration';
@@ -7,12 +6,9 @@ import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
 import Header from './components/Header/Header';
-
-import { getAuthState } from './store/user/userSelectors';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export default function App() {
-	const isAuthenticated = useSelector(getAuthState);
-
 	return (
 		<>
 			<BrowserRouter>
@@ -21,22 +17,18 @@ export default function App() {
 					<Route path='*' element={<Navigate to='/login' />} />
 					<Route path='/login' element={<Login />} />
 					<Route path='/registration' element={<Registration />} />
-					<Route
-						path='/courses'
-						element={isAuthenticated ? <Courses /> : <Navigate to='/login' />}
-					/>
-					<Route
-						path='/courses/add'
-						element={
-							isAuthenticated ? <CreateCourse /> : <Navigate to='/login' />
-						}
-					/>
-					<Route
-						path='/courses/:courseId'
-						element={
-							isAuthenticated ? <CourseInfo /> : <Navigate to='/login' />
-						}
-					/>
+
+					<Route exact path='/courses' element={<PrivateRoute />}>
+						<Route exact path='/courses' element={<Courses />} />
+					</Route>
+
+					<Route exact path='/courses/add' element={<PrivateRoute />}>
+						<Route exact path='/courses/add' element={<CreateCourse />} />
+					</Route>
+
+					<Route exact path='/courses/:courseId' element={<PrivateRoute />}>
+						<Route exact path='/courses/:courseId' element={<CourseInfo />} />
+					</Route>
 				</Routes>
 			</BrowserRouter>
 		</>
