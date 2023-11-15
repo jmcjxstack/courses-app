@@ -4,7 +4,7 @@ import Courses from './components/Courses/Courses';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
-import CourseForm from './components/CourseForm/CourseForm';
+import CreateCourse from './components/CreateCourse/CreateCourse';
 import Header from './components/Header/Header';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
@@ -36,7 +36,7 @@ export default function App() {
 						path='/courses/add'
 						element={<PrivateRoute allowedRoles={['admin']} />}
 					>
-						<Route path='/courses/add' element={<CourseForm />} />
+						<Route path='/courses/add' element={<CreateCourse />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

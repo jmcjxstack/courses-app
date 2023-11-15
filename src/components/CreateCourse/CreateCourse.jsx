@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
-import AuthorItem from './components/AuthorItem/AuthorItem';
+import AuthorItem from '../AuthorItem/AuthorItem';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { getAuthors } from '../../store/authors/authorsSelectors';
 import { addCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
-import './course-form.css';
+import './create-course.css';
 
-export default function CourseForm() {
+export default function CreateCourse() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
