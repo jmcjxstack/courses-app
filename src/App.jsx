@@ -18,16 +18,25 @@ export default function App() {
 					<Route path='/login' element={<Login />} />
 					<Route path='/registration' element={<Registration />} />
 
-					<Route exact path='/courses' element={<PrivateRoute />}>
-						<Route exact path='/courses' element={<Courses />} />
+					<Route
+						path='/courses'
+						element={<PrivateRoute allowedRoles={['user', 'admin']} />}
+					>
+						<Route path='/courses' element={<Courses />} />
 					</Route>
 
-					<Route exact path='/courses/add' element={<PrivateRoute />}>
-						<Route exact path='/courses/add' element={<CreateCourse />} />
+					<Route
+						path='/courses/:courseId'
+						element={<PrivateRoute allowedRoles={['user', 'admin']} />}
+					>
+						<Route path='/courses/:courseId' element={<CourseInfo />} />
 					</Route>
 
-					<Route exact path='/courses/:courseId' element={<PrivateRoute />}>
-						<Route exact path='/courses/:courseId' element={<CourseInfo />} />
+					<Route
+						path='/courses/add'
+						element={<PrivateRoute allowedRoles={['admin']} />}
+					>
+						<Route path='/courses/add' element={<CreateCourse />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>
