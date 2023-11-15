@@ -18,6 +18,7 @@ export default function CreateCourse() {
 	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
 
+	//state to manage new course
 	const [newCourse, setNewCourse] = useState({
 		id: '',
 		title: '',
@@ -27,19 +28,22 @@ export default function CreateCourse() {
 		authors: [],
 	});
 
+	//state to manage new author
 	const [newAuthor, setNewAuthor] = useState({
 		id: '',
 		name: '',
 	});
 
+	//state that renders all authors to add to a new course
 	const [authorsToAdd, setAuthorsToAdd] = useState(authors);
 
+	//state that holds authors for a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
+	//effect to get new id and date, and adds them to course, no longer needed
 	useEffect(() => {
 		const newId = getNewId();
 		const newDate = getNewDate();
-
 		setNewCourse((prevState) => ({
 			...prevState,
 			id: newId,
@@ -47,34 +51,39 @@ export default function CreateCourse() {
 		}));
 	}, []);
 
+	//effect that re-renders when a new author is added to be able
+	//to add new author to new course, it works with store,
+	//so it may change to work with api
 	useEffect(() => {
 		setAuthorsToAdd(authors);
 	}, [authors]);
 
+	//tracks authors of new course and adds them to the new course
 	useEffect(() => {
 		const authorsList = authorsToRemove.map((author) => author.id);
-
 		setNewCourse((prevState) => ({
 			...prevState,
 			authors: authorsList,
 		}));
 	}, [authorsToRemove]);
 
+	//gets date, no longer necessary
 	function getNewDate() {
 		const newDate = new Date();
 		const yyyy = newDate.getFullYear();
 		let mm = newDate.getMonth() + 1;
 		let dd = newDate.getDate();
 		const formattedDate = `${dd}/${mm}/${yyyy}`;
-
 		return formattedDate;
 	}
 
+	//gets id no longer necessary
 	function getNewId() {
 		const newId = uuidv4();
 		return newId;
 	}
 
+	//function that manages form input
 	function handleInputChangeNewCourse(e) {
 		const updatedValue =
 			e.target.name === 'duration'
@@ -86,6 +95,7 @@ export default function CreateCourse() {
 		});
 	}
 
+	//function that manages input of new author name
 	function handleInputChangeNewAuthorName(e) {
 		setNewAuthor({
 			...newAuthor,
@@ -93,9 +103,9 @@ export default function CreateCourse() {
 		});
 	}
 
+	//function that submits the new author
 	function handleSubmitNewAuthor(e) {
 		e.preventDefault();
-
 		const authorWithId = { ...newAuthor, id: getNewId() };
 		dispatch(addAuthor(authorWithId));
 		setNewAuthor({
@@ -103,18 +113,21 @@ export default function CreateCourse() {
 		});
 	}
 
+	//handles click of button to add author to new course
 	function handleAddAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToAdd(authorsToAdd.filter((a) => a.id !== author.id));
 		setAuthorsToRemove([...authorsToRemove, author]);
 	}
 
+	//handles click of button to remove author from new course
 	function handleRemoveAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToRemove(authorsToRemove.filter((a) => a.id !== author.id));
 		setAuthorsToAdd([...authorsToAdd, author]);
 	}
 
+	//handles submit of new course
 	function handleSubmitCourse(e) {
 		e.preventDefault();
 		if (
