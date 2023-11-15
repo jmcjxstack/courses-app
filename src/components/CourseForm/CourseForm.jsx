@@ -11,9 +11,9 @@ import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { getAuthors } from '../../store/authors/authorsSelectors';
 import { addCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
-import './create-course.css';
+import './course-form.css';
 
-export default function CreateCourse() {
+export default function CourseForm() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
