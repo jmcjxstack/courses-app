@@ -40,9 +40,9 @@ export async function getAllCoursesService() {
 	return response.data.result;
 }
 
-export async function addCourseService() {
+export async function addCourseService(courseInfo) {
 	const token = localStorage.getItem('isAuth');
-	const response = await axios.post(`${API_URL}/courses/add`, {
+	const response = await axios.post(`${API_URL}/courses/add`, courseInfo, {
 		headers: {
 			Authorization: token,
 		},
@@ -58,4 +58,14 @@ export async function addCourseService() {
 export async function getAllAuthorsService() {
 	const response = await axios.get(`${API_URL}/authors/all`);
 	return response.data.result;
+}
+
+export async function addAuthorService(authorInfo) {
+	const token = localStorage.getItem('isAuth');
+	const response = await axios.post(`${API_URL}/authors/add`, authorInfo, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return response.data;
 }
