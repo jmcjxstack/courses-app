@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 
-import { fetchUserData, resetUser } from '../../store/user/userSlice';
+import { fetchUserData, logoutUser } from '../../store/user/userSlice';
 import { getUserName } from '../../store/user/userSelectors';
 import './header.css';
 
@@ -21,10 +21,10 @@ export default function Header() {
 		) {
 			dispatch(fetchUserData());
 		}
-	}, [dispatch, location]);
+	}, [location, dispatch]);
 
 	function logOut() {
-		dispatch(resetUser());
+		dispatch(logoutUser());
 		navigate('/login');
 	}
 

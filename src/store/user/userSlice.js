@@ -23,15 +23,6 @@ export const fetchUserData = createAsyncThunk(
 	}
 );
 
-export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
-	try {
-		const data = await logoutUserService();
-		return data;
-	} catch (error) {
-		throw error;
-	}
-});
-
 const userSlice = createSlice({
 	name: 'user',
 	initialState: userInitialState,
@@ -44,7 +35,8 @@ const userSlice = createSlice({
 			state.token = result;
 			localStorage.setItem('isAuth', result);
 		},
-		resetUser: (state) => {
+		logoutUser: (state) => {
+			logoutUserService();
 			state.isAuth = false;
 			state.name = '';
 			state.email = '';
@@ -72,24 +64,10 @@ const userSlice = createSlice({
 			.addCase(fetchUserData.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
-			})
-			.addCase(logoutUser.pending, (state) => {
-				state.status = 'loading';
-			})
-			.addCase(logoutUser.fulfilled, (state, action) => {
-				state.isAuth = false;
-				state.name = '';
-				state.email = '';
-				state.token = '';
-				localStorage.removeItem('isAuth');
-			})
-			.addCase(logoutUser.rejected, (state, action) => {
-				state.status = 'failed';
-				state.error = action.error.message;
 			});
 	},
 });
 
-export const { updateUser, resetUser } = userSlice.actions;
+export const { updateUser, logoutUser } = userSlice.actions;
 
 export default userSlice.reducer;
