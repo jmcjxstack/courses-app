@@ -6,9 +6,8 @@ import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
 
-import { getAllAuthors, getAllCourses } from '../../services';
-import { setAuthors } from '../../store/authors/authorsSlice';
-import { setCourses } from '../../store/courses/coursesSlice';
+import { fetchAuthorsData } from '../../store/authors/authorsSlice';
+import { fetchCoursesData } from '../../store/courses/coursesSlice';
 import {
 	getCourses,
 	isCoursesFetched,
@@ -28,21 +27,11 @@ export default function Courses() {
 	const isAuthorsDataFetched = useSelector(isAuthorsFetched);
 
 	useEffect(() => {
-		async function fetchAllCourses() {
-			const coursesResponse = await getAllCourses();
-			const coursesArray = coursesResponse.data.result;
-			dispatch(setCourses(coursesArray));
-		}
-		async function fetchAllAuthors() {
-			const authorsResponse = await getAllAuthors();
-			const authorsArray = authorsResponse.data.result;
-			dispatch(setAuthors(authorsArray));
-		}
 		if (!isCoursesDataFetched) {
-			fetchAllCourses();
+			dispatch(fetchCoursesData());
 		}
 		if (!isAuthorsDataFetched) {
-			fetchAllAuthors();
+			dispatch(fetchAuthorsData());
 		}
 	}, [isCoursesDataFetched, isAuthorsDataFetched, dispatch]);
 

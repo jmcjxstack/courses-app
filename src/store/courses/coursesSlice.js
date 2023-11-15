@@ -1,18 +1,29 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { getAllCoursesService } from '../../services';
 
 const coursesInitialState = {
 	courses: [],
 	isDataFetched: false,
+	status: 'idle',
+	error: null,
 };
+
+export const fetchCoursesData = createAsyncThunk(
+	'courses/fetchCoursesData',
+	async () => {
+		try {
+			const data = await getAllCoursesService();
+			return data;
+		} catch (error) {
+			throw error;
+		}
+	}
+);
 
 const coursesSlice = createSlice({
 	name: 'courses',
 	initialState: coursesInitialState,
 	reducers: {
-		setCourses: (state, action) => {
-			state.courses = action.payload;
-			state.isDataFetched = true;
-		},
 		addCourse: (state, action) => {
 			state.courses.push(action.payload);
 		},
@@ -22,6 +33,21 @@ const coursesSlice = createSlice({
 				(course) => course.id !== courseIdToDelete
 			);
 		},
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(fetchCoursesData.pending, (state) => {
+				state.status = 'loading';
+			})
+			.addCase(fetchCoursesData.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				state.courses = action.payload;
+				state.isDataFetched = true;
+			})
+			.addCase(fetchCoursesData.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
+			});
 	},
 });
 

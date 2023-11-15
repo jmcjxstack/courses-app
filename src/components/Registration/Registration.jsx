@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
-import { registerUser } from '../../services';
+import { registerUserService } from '../../services';
 import './registration.css';
 
 export default function Registration() {
@@ -33,7 +33,7 @@ export default function Registration() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
-			await registerUser(newUser);
+			await registerUserService(newUser);
 			navigate('/login');
 		} catch (error) {
 			alert(error);

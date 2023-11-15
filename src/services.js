@@ -1,22 +1,22 @@
 import { API_URL } from './constants';
 import axios from 'axios';
 
-export async function registerUser(userInfo) {
+export async function registerUserService(userInfo) {
 	const response = await axios.post(`${API_URL}/register`, userInfo);
-	return response;
+	return response.data;
 }
 
-export async function loginUser(loginInfo) {
+export async function loginUserService(loginInfo) {
 	const response = await axios.post(`${API_URL}/login`, loginInfo);
-	return response;
+	return response.data;
 }
 
-export async function getAllCourses() {
+export async function getAllCoursesService() {
 	const response = await axios.get(`${API_URL}/courses/all`);
-	return response;
+	return response.data.result;
 }
 
-export async function getAllAuthors() {
+export async function getAllAuthorsService() {
 	const response = await axios.get(`${API_URL}/authors/all`);
-	return response;
+	return response.data.result;
 }

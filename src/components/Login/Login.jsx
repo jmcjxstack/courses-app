@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 
-import { loginUser } from '../../services';
+import { loginUserService } from '../../services';
 import { updateUser } from '../../store/user/userSlice';
 import './login.css';
 
@@ -35,8 +35,7 @@ export default function Login() {
 	async function handleSubmit(e) {
 		e.preventDefault();
 		try {
-			const response = await loginUser(loginInfo);
-			const loginData = response.data;
+			const loginData = await loginUserService(loginInfo);
 			dispatch(updateUser(loginData));
 			navigate('/courses');
 		} catch (error) {
