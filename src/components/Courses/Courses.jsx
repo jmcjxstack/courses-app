@@ -16,6 +16,7 @@ import {
 	getAuthors,
 	isAuthorsFetched,
 } from '../../store/authors/authorsSelectors';
+import { fetchUserData } from '../../store/user/userSlice';
 import './courses.css';
 
 export default function Courses() {
@@ -27,6 +28,7 @@ export default function Courses() {
 	const isAuthorsDataFetched = useSelector(isAuthorsFetched);
 
 	useEffect(() => {
+		dispatch(fetchUserData());
 		if (!isCoursesDataFetched) {
 			dispatch(fetchCoursesData());
 		}

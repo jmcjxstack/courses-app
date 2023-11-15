@@ -20,3 +20,17 @@ export async function getAllAuthorsService() {
 	const response = await axios.get(`${API_URL}/authors/all`);
 	return response.data.result;
 }
+
+export async function getUserInfoService() {
+	if (!!localStorage.getItem('isAuth')) {
+		const token = localStorage.getItem('isAuth');
+		const response = await axios.get(`${API_URL}/users/me`, {
+			headers: {
+				Authorization: token,
+			},
+		});
+		return response.data;
+	} else {
+		return;
+	}
+}

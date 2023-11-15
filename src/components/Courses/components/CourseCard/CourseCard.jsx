@@ -1,18 +1,23 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../../../common/Button/Button';
 
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
 import { deleteCourse } from '../../../../store/courses/coursesSlice';
+import { getCourses } from '../../../../store/courses/coursesSelectors';
+import { getAuthors } from '../../../../store/authors/authorsSelectors';
+import { getUserRole } from '../../../../store/user/userSelectors';
 import './courseCard.css';
 
-export default function CourseCard({ courses, authors }) {
+export default function CourseCard() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const courses = useSelector(getCourses);
+	const authors = useSelector(getAuthors);
+	const role = useSelector(getUserRole);
 
 	function handleDelete(courseId) {
 		dispatch(deleteCourse(courseId));
@@ -54,11 +59,15 @@ export default function CourseCard({ courses, authors }) {
 									buttonName='Show Course'
 									onClick={() => navigate(`/courses/${course.id}`)}
 								/>
-								<Button buttonName='🖊️' />
-								<Button
-									buttonName='🗑️'
-									onClick={() => handleDelete(course.id)}
-								/>
+								{role === 'admin' && (
+									<>
+										<Button buttonName='🖊️' />
+										<Button
+											buttonName='🗑️'
+											onClick={() => handleDelete(course.id)}
+										/>
+									</>
+								)}
 							</div>
 						</div>
 					</div>
@@ -66,22 +75,3 @@ export default function CourseCard({ courses, authors }) {
 		</>
 	);
 }
-
-CourseCard.propTypes = {
-	courses: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			title: PropTypes.string,
-			description: PropTypes.string,
-			creationDate: PropTypes.string,
-			duration: PropTypes.number,
-			authors: PropTypes.arrayOf(PropTypes.string),
-		})
-	),
-	authors: PropTypes.arrayOf(
-		PropTypes.shape({
-			id: PropTypes.string,
-			name: PropTypes.string,
-		})
-	),
-};
