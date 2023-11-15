@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAllAuthorsService } from '../../services';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchAuthorsData } from './authorsThunk';
 
 const authorsInitialState = {
 	authors: [],
@@ -7,18 +7,6 @@ const authorsInitialState = {
 	status: 'idle',
 	error: null,
 };
-
-export const fetchAuthorsData = createAsyncThunk(
-	'authors/fetchAuthorsData',
-	async () => {
-		try {
-			const data = await getAllAuthorsService();
-			return data;
-		} catch (error) {
-			throw error;
-		}
-	}
-);
 
 const authorsSlice = createSlice({
 	name: 'authors',

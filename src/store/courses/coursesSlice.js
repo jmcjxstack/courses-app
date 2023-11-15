@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAllCoursesService } from '../../services';
+import { createSlice } from '@reduxjs/toolkit';
+import { fetchCoursesData } from './coursesThunk';
 
 const coursesInitialState = {
 	courses: [],
@@ -7,18 +7,6 @@ const coursesInitialState = {
 	status: 'idle',
 	error: null,
 };
-
-export const fetchCoursesData = createAsyncThunk(
-	'courses/fetchCoursesData',
-	async () => {
-		try {
-			const data = await getAllCoursesService();
-			return data;
-		} catch (error) {
-			throw error;
-		}
-	}
-);
 
 const coursesSlice = createSlice({
 	name: 'courses',

@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserInfoService, logoutUserService } from '../../services';
+import { createSlice } from '@reduxjs/toolkit';
+import { logoutUserService } from '../../services';
+import { fetchUserData } from './userThunk';
 
 const userInitialState = {
 	isAuth: false,
@@ -10,18 +11,6 @@ const userInitialState = {
 	status: '',
 	error: null,
 };
-
-export const fetchUserData = createAsyncThunk(
-	'user/fetchUserData',
-	async () => {
-		try {
-			const data = await getUserInfoService();
-			return data;
-		} catch (error) {
-			throw error;
-		}
-	}
-);
 
 const userSlice = createSlice({
 	name: 'user',

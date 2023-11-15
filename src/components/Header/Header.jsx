@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 
-import { fetchUserData, logoutUser } from '../../store/user/userSlice';
+import { logoutUser } from '../../store/user/userSlice';
 import { getUserName } from '../../store/user/userSelectors';
 import './header.css';
+import { fetchUserData } from '../../store/user/userThunk';
 
 export default function Header() {
 	const location = useLocation();

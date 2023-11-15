@@ -40,6 +40,16 @@ export async function getAllCoursesService() {
 	return response.data.result;
 }
 
+export async function addCourseService() {
+	const token = localStorage.getItem('isAuth');
+	const response = await axios.post(`${API_URL}/courses/add`, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return response.data;
+}
+
 // export async function deleteCourseService() {
 // 	const response = await axios.delete();
 // }

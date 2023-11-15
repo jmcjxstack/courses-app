@@ -6,12 +6,12 @@ import CourseCard from './components/CourseCard/CourseCard';
 import SearchBar from './components/SearchBar/SearchBar';
 import Button from '../../common/Button/Button';
 
-import { fetchAuthorsData } from '../../store/authors/authorsSlice';
-import { fetchCoursesData } from '../../store/courses/coursesSlice';
 import { isCoursesFetched } from '../../store/courses/coursesSelectors';
 import { isAuthorsFetched } from '../../store/authors/authorsSelectors';
-import './courses.css';
 import { getUserRole } from '../../store/user/userSelectors';
+import { fetchCoursesData } from '../../store/courses/coursesThunk';
+import { fetchAuthorsData } from '../../store/authors/authorsThunk';
+import './courses.css';
 
 export default function Courses() {
 	const navigate = useNavigate();
