@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 
-import { resetUser } from '../../store/user/userSlice';
+import { fetchUserData, resetUser } from '../../store/user/userSlice';
 import { getUserName } from '../../store/user/userSelectors';
 import './header.css';
 
@@ -14,6 +14,14 @@ export default function Header() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const userName = useSelector(getUserName);
+
+	useEffect(() => {
+		if (
+			!(location.pathname === '/login' || location.pathname === '/registration')
+		) {
+			dispatch(fetchUserData());
+		}
+	}, [dispatch, location]);
 
 	function logOut() {
 		dispatch(resetUser());

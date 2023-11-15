@@ -49,13 +49,16 @@ const userSlice = createSlice({
 				state.status = 'loading';
 			})
 			.addCase(fetchUserData.fulfilled, (state, action) => {
-				const { result } = action.payload;
-				state.status = 'succeeded';
-				state.isAuth = true;
-				state.token = localStorage.getItem('isAuth');
-				state.name = result.name;
-				state.email = result.email;
-				state.role = result.role;
+				try {
+					state.status = 'succeeded';
+					state.isAuth = true;
+					state.token = localStorage.getItem('isAuth');
+					state.name = action.payload.result.name;
+					state.email = action.payload.result.email;
+					state.role = action.payload.result.role;
+				} catch (error) {
+					console.log(error);
+				}
 			})
 			.addCase(fetchUserData.rejected, (state, action) => {
 				state.status = 'failed';

@@ -8,27 +8,19 @@ import Button from '../../common/Button/Button';
 
 import { fetchAuthorsData } from '../../store/authors/authorsSlice';
 import { fetchCoursesData } from '../../store/courses/coursesSlice';
-import {
-	getCourses,
-	isCoursesFetched,
-} from '../../store/courses/coursesSelectors';
-import {
-	getAuthors,
-	isAuthorsFetched,
-} from '../../store/authors/authorsSelectors';
-import { fetchUserData } from '../../store/user/userSlice';
+import { isCoursesFetched } from '../../store/courses/coursesSelectors';
+import { isAuthorsFetched } from '../../store/authors/authorsSelectors';
 import './courses.css';
+import { getUserRole } from '../../store/user/userSelectors';
 
 export default function Courses() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	const courses = useSelector(getCourses);
-	const authors = useSelector(getAuthors);
 	const isCoursesDataFetched = useSelector(isCoursesFetched);
 	const isAuthorsDataFetched = useSelector(isAuthorsFetched);
+	const role = useSelector(getUserRole);
 
 	useEffect(() => {
-		dispatch(fetchUserData());
 		if (!isCoursesDataFetched) {
 			dispatch(fetchCoursesData());
 		}
@@ -45,13 +37,15 @@ export default function Courses() {
 					<Button buttonName='Search' />
 				</div>
 				<div className='new-course-button'>
-					<Button
-						buttonName='Add new course'
-						onClick={() => navigate('/courses/add')}
-					/>
+					{role === 'admin' && (
+						<Button
+							buttonName='Add new course'
+							onClick={() => navigate('/courses/add')}
+						/>
+					)}
 				</div>
 			</div>
-			<CourseCard courses={courses} authors={authors} />
+			<CourseCard />
 		</>
 	);
 }
