@@ -12,6 +12,16 @@ export async function loginUserService(loginInfo) {
 	return response.data;
 }
 
+export async function logoutUserService() {
+	const token = localStorage.getItem('isAuth');
+	const response = await axios.delete(`${API_URL}/logout`, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return response.data;
+}
+
 export async function getUserInfoService() {
 	if (!!localStorage.getItem('isAuth')) {
 		const token = localStorage.getItem('isAuth');
@@ -30,7 +40,9 @@ export async function getAllCoursesService() {
 	return response.data.result;
 }
 
-export async function deleteCourseService() {}
+// export async function deleteCourseService() {
+// 	const response = await axios.delete();
+// }
 
 //Authors
 export async function getAllAuthorsService() {

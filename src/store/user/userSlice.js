@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserInfoService } from '../../services';
+import { getUserInfoService, logoutUserService } from '../../services';
 
 const userInitialState = {
 	isAuth: false,
@@ -22,6 +22,15 @@ export const fetchUserData = createAsyncThunk(
 		}
 	}
 );
+
+export const logoutUser = createAsyncThunk('user/logoutUser', async () => {
+	try {
+		const data = await logoutUserService();
+		return data;
+	} catch (error) {
+		throw error;
+	}
+});
 
 const userSlice = createSlice({
 	name: 'user',
@@ -61,6 +70,20 @@ const userSlice = createSlice({
 				}
 			})
 			.addCase(fetchUserData.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
+			})
+			.addCase(logoutUser.pending, (state) => {
+				state.status = 'loading';
+			})
+			.addCase(logoutUser.fulfilled, (state, action) => {
+				state.isAuth = false;
+				state.name = '';
+				state.email = '';
+				state.token = '';
+				localStorage.removeItem('isAuth');
+			})
+			.addCase(logoutUser.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
 			});
