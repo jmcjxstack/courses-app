@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
-import AuthorItem from '../AuthorItem/AuthorItem';
+import AuthorItem from './components/AuthorItem/AuthorItem';
 
 import {
 	addAuthorService,
