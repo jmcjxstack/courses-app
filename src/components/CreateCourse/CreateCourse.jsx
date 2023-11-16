@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
@@ -12,6 +11,7 @@ import { getAuthors } from '../../store/authors/authorsSelectors';
 import { addCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
 import './create-course.css';
+import { addAuthorService } from '../../services';
 
 export default function CreateCourse() {
 	const navigate = useNavigate();
@@ -20,17 +20,14 @@ export default function CreateCourse() {
 
 	//state to manage new course
 	const [newCourse, setNewCourse] = useState({
-		id: '',
 		title: '',
 		description: '',
-		creationDate: '',
 		duration: 0,
 		authors: [],
 	});
 
 	//state to manage new author
 	const [newAuthor, setNewAuthor] = useState({
-		id: '',
 		name: '',
 	});
 
@@ -39,17 +36,6 @@ export default function CreateCourse() {
 
 	//state that holds authors for a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
-
-	//effect to get new id and date, and adds them to course, no longer needed
-	useEffect(() => {
-		const newId = getNewId();
-		const newDate = getNewDate();
-		setNewCourse((prevState) => ({
-			...prevState,
-			id: newId,
-			creationDate: newDate,
-		}));
-	}, []);
 
 	//effect that re-renders when a new author is added to be able
 	//to add new author to new course, it works with store,
@@ -66,22 +52,6 @@ export default function CreateCourse() {
 			authors: authorsList,
 		}));
 	}, [authorsToRemove]);
-
-	//gets date, no longer necessary
-	function getNewDate() {
-		const newDate = new Date();
-		const yyyy = newDate.getFullYear();
-		let mm = newDate.getMonth() + 1;
-		let dd = newDate.getDate();
-		const formattedDate = `${dd}/${mm}/${yyyy}`;
-		return formattedDate;
-	}
-
-	//gets id no longer necessary
-	function getNewId() {
-		const newId = uuidv4();
-		return newId;
-	}
 
 	//function that manages form input
 	function handleInputChangeNewCourse(e) {
@@ -104,10 +74,10 @@ export default function CreateCourse() {
 	}
 
 	//function that submits the new author
-	function handleSubmitNewAuthor(e) {
+	async function handleSubmitNewAuthor(e) {
 		e.preventDefault();
-		const authorWithId = { ...newAuthor, id: getNewId() };
-		dispatch(addAuthor(authorWithId));
+		const response = await addAuthorService(newAuthor);
+		dispatch(addAuthor(response.result));
 		setNewAuthor({
 			name: '',
 		});
