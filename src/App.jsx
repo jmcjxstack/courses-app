@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import Courses from './components/Courses/Courses';
-import Registration from './components/Registration/Registration';
+import Header from './components/Header/Header';
 import Login from './components/Login/Login';
+import Registration from './components/Registration/Registration';
+import Courses from './components/Courses/Courses';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import CreateCourse from './components/CreateCourse/CreateCourse';
-import Header from './components/Header/Header';
+import EditCourse from './components/EditCourse/EditCourse';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export default function App() {
@@ -37,6 +38,13 @@ export default function App() {
 						element={<PrivateRoute allowedRoles={['admin']} />}
 					>
 						<Route path='/courses/add' element={<CreateCourse />} />
+					</Route>
+
+					<Route
+						path='/courses/update/:courseId'
+						element={<PrivateRoute allowedRoles={['admin']} />}
+					>
+						<Route path='/courses/update/:courseId' element={<EditCourse />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

@@ -61,7 +61,10 @@ export default function CourseCard() {
 								/>
 								{role === 'admin' && (
 									<>
-										<Button buttonName='🖊️' />
+										<Button
+											buttonName='🖊️'
+											onClick={() => navigate(`/courses/update/${course.id}`)}
+										/>
 										<Button
 											buttonName='🗑️'
 											onClick={() => handleDelete(course.id)}
