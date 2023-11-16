@@ -7,13 +7,15 @@ export default function PrivateRoute({ allowedRoles }) {
 	const isAuthenticated = !!localStorage.getItem('isAuth');
 	const role = useSelector(getUserRole);
 
-	if (!isAuthenticated) {
-		return <Navigate to='/login' />;
+	if (isAuthenticated && allowedRoles && allowedRoles.includes(role)) {
+		return <Outlet />;
 	}
 
-	if (allowedRoles && !allowedRoles.includes(role)) {
+	if (isAuthenticated && allowedRoles && !allowedRoles.includes(role)) {
 		return <Navigate to='/courses' />;
 	}
 
-	return <Outlet />;
+	if (!isAuthenticated) {
+		return <Navigate to='/login' />;
+	}
 }

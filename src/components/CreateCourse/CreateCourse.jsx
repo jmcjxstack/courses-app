@@ -6,19 +6,18 @@ import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 
+import { addAuthorService, addCourseService } from '../../services';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { getAuthors } from '../../store/authors/authorsSelectors';
 import { addCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
 import './create-course.css';
-import { addAuthorService } from '../../services';
 
 export default function CreateCourse() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
 
-	//state to manage new course
 	const [newCourse, setNewCourse] = useState({
 		title: '',
 		description: '',
@@ -37,9 +36,7 @@ export default function CreateCourse() {
 	//state that holds authors for a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
-	//effect that re-renders when a new author is added to be able
-	//to add new author to new course, it works with store,
-	//so it may change to work with api
+	//re-renders list of authors when a new author is added.
 	useEffect(() => {
 		setAuthorsToAdd(authors);
 	}, [authors]);
@@ -53,7 +50,6 @@ export default function CreateCourse() {
 		}));
 	}, [authorsToRemove]);
 
-	//function that manages form input
 	function handleInputChangeNewCourse(e) {
 		const updatedValue =
 			e.target.name === 'duration'
@@ -65,7 +61,6 @@ export default function CreateCourse() {
 		});
 	}
 
-	//function that manages input of new author name
 	function handleInputChangeNewAuthorName(e) {
 		setNewAuthor({
 			...newAuthor,
@@ -73,7 +68,6 @@ export default function CreateCourse() {
 		});
 	}
 
-	//function that submits the new author
 	async function handleSubmitNewAuthor(e) {
 		e.preventDefault();
 		const response = await addAuthorService(newAuthor);
@@ -97,8 +91,7 @@ export default function CreateCourse() {
 		setAuthorsToAdd([...authorsToAdd, author]);
 	}
 
-	//handles submit of new course
-	function handleSubmitCourse(e) {
+	async function handleSubmitCourse(e) {
 		e.preventDefault();
 		if (
 			newCourse.title === '' ||
@@ -108,12 +101,11 @@ export default function CreateCourse() {
 		) {
 			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
-			dispatch(addCourse(newCourse));
+			const response = await addCourseService(newCourse);
+			dispatch(addCourse(response.result));
 			setNewCourse({
-				id: '',
 				title: '',
 				description: '',
-				creationDate: '',
 				duration: 0,
 				authors: [],
 			});
