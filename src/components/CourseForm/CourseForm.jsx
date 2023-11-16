@@ -1,22 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 
-import { addAuthorService, addCourseService } from '../../services';
+import {
+	addAuthorService,
+	loadCourseService,
+	updateCourseService,
+	addCourseService,
+} from '../../services';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { getAuthors } from '../../store/authors/authorsSelectors';
-import { addCourse } from '../../store/courses/coursesSlice';
+import { addCourse, updateCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
-import './create-course.css';
+import './course-form.css';
 
-export default function CreateCourse() {
+export default function CourseForm() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { courseId } = useParams();
 	const authors = useSelector(getAuthors);
+	const isUpdateMode = courseId !== undefined;
 
 	const [newCourse, setNewCourse] = useState({
 		title: '',
@@ -32,6 +39,16 @@ export default function CreateCourse() {
 	const [authorsToAdd, setAuthorsToAdd] = useState(authors);
 
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
+
+	useEffect(() => {
+		async function loadCourse() {
+			const response = await loadCourseService(courseId);
+			setNewCourse(response);
+		}
+		if (isUpdateMode) {
+			loadCourse();
+		}
+	}, [courseId, isUpdateMode]);
 
 	useEffect(() => {
 		setAuthorsToAdd(authors);
@@ -94,9 +111,16 @@ export default function CreateCourse() {
 		) {
 			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
-			const response = await addCourseService(newCourse);
-			dispatch(addCourse(response.result));
-			navigate('/courses');
+			if (isUpdateMode) {
+				const response = await updateCourseService(courseId, newCourse);
+				const updatedCourseData = response.result;
+				dispatch(updateCourse({ courseId, updatedCourseData }));
+				navigate('/courses');
+			} else {
+				const response = await addCourseService(newCourse);
+				dispatch(addCourse(response.result));
+				navigate('/courses');
+			}
 		}
 	}
 
@@ -119,7 +143,7 @@ export default function CreateCourse() {
 					</div>
 					<div className='create-course-button'>
 						<Button
-							buttonName='Create Course'
+							buttonName={isUpdateMode ? 'Update Course' : 'Create Course'}
 							onClick={(e) => handleSubmitCourse(e)}
 						/>
 					</div>

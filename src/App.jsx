@@ -5,8 +5,7 @@ import Login from './components/Login/Login';
 import Registration from './components/Registration/Registration';
 import Courses from './components/Courses/Courses';
 import CourseInfo from './components/CourseInfo/CourseInfo';
-import CreateCourse from './components/CreateCourse/CreateCourse';
-import EditCourse from './components/EditCourse/EditCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 
 export default function App() {
@@ -37,14 +36,14 @@ export default function App() {
 						path='/courses/add'
 						element={<PrivateRoute allowedRoles={['admin']} />}
 					>
-						<Route path='/courses/add' element={<CreateCourse />} />
+						<Route path='/courses/add' element={<CourseForm />} />
 					</Route>
 
 					<Route
 						path='/courses/update/:courseId'
 						element={<PrivateRoute allowedRoles={['admin']} />}
 					>
-						<Route path='/courses/update/:courseId' element={<EditCourse />} />
+						<Route path='/courses/update/:courseId' element={<CourseForm />} />
 					</Route>
 				</Routes>
 			</BrowserRouter>

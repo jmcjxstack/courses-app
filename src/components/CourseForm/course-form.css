@@ -11,11 +11,11 @@
     flex-direction: column;
 }
 
-.title-input label{
+.title-input label {
     margin-bottom: 5px;
 }
 
-.title-input input{
+.title-input input {
     border: 1px solid orange;
     height: 25px;
     width: 500px;
@@ -27,7 +27,7 @@
     margin-right: 10px;
 }
 
-.create-course-button button{
+.create-course-button button {
     border: 1px solid purple;
     width: 120px;
     height: 30px;
@@ -43,7 +43,7 @@
 .textarea textarea {
     resize: none;
     border: 1px solid #ffd500;
-    margin-top: 5px    
+    margin-top: 5px
 }
 
 .bottom {
@@ -65,7 +65,7 @@
 
 .author-info {
     display: flex;
-    flex-direction: column;    
+    flex-direction: column;
     padding: 20px;
 }
 
@@ -94,8 +94,8 @@
     margin: 20px auto;
 }
 
-.author-list p{
-    text-align: left;    
+.author-list p {
+    text-align: left;
 }
 
 .empty-list {
