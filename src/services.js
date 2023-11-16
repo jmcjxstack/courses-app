@@ -50,6 +50,11 @@ export async function addCourseService(courseInfo) {
 	return response.data;
 }
 
+export async function loadCourseService(id) {
+	const response = await axios.get(`${API_URL}/courses/${id}`);
+	return response.data.result;
+}
+
 // export async function deleteCourseService() {
 // 	const response = await axios.delete();
 // }

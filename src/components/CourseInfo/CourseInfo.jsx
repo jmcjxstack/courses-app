@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -9,12 +9,21 @@ import { formatCreationDate } from '../../helpers/formatCreationDate';
 import { getCourseById } from '../../store/courses/coursesSelectors';
 import { getAuthors } from '../../store/authors/authorsSelectors';
 import './course-info.css';
+import { loadCourseService } from '../../services';
 
 export default function CourseInfo() {
 	const navigate = useNavigate();
 	const { courseId } = useParams();
 	const authors = useSelector(getAuthors);
-	const courseInfo = useSelector((state) => getCourseById(state, courseId));
+	const [courseInfo, setCourseInfo] = useState();
+
+	useEffect(() => {
+		async function loadCourse() {
+			const response = await loadCourseService(courseId);
+			setCourseInfo(response);
+		}
+		loadCourse();
+	}, [courseId]);
 
 	const authorsList = courseInfo?.authors.map(
 		(authorId) => authors?.find((author) => author.id === authorId).name
