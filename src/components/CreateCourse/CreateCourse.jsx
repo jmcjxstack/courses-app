@@ -25,23 +25,18 @@ export default function CreateCourse() {
 		authors: [],
 	});
 
-	//state to manage new author
 	const [newAuthor, setNewAuthor] = useState({
 		name: '',
 	});
 
-	//state that renders all authors to add to a new course
 	const [authorsToAdd, setAuthorsToAdd] = useState(authors);
 
-	//state that holds authors for a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
-	//re-renders list of authors when a new author is added.
 	useEffect(() => {
 		setAuthorsToAdd(authors);
 	}, [authors]);
 
-	//tracks authors of new course and adds them to the new course
 	useEffect(() => {
 		const authorsList = authorsToRemove.map((author) => author.id);
 		setNewCourse((prevState) => ({
@@ -77,14 +72,12 @@ export default function CreateCourse() {
 		});
 	}
 
-	//handles click of button to add author to new course
 	function handleAddAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToAdd(authorsToAdd.filter((a) => a.id !== author.id));
 		setAuthorsToRemove([...authorsToRemove, author]);
 	}
 
-	//handles click of button to remove author from new course
 	function handleRemoveAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToRemove(authorsToRemove.filter((a) => a.id !== author.id));
@@ -103,12 +96,6 @@ export default function CreateCourse() {
 		} else {
 			const response = await addCourseService(newCourse);
 			dispatch(addCourse(response.result));
-			setNewCourse({
-				title: '',
-				description: '',
-				duration: 0,
-				authors: [],
-			});
 			navigate('/courses');
 		}
 	}

@@ -14,6 +14,18 @@ const coursesSlice = createSlice({
 		addCourse: (state, action) => {
 			state.courses.push(action.payload);
 		},
+		updateCourse: (state, action) => {
+			const { courseId, updatedCourseData } = action.payload;
+			const courseIndex = state.courses.findIndex(
+				(course) => course.id === courseId
+			);
+			if (courseIndex !== -1) {
+				state.courses[courseIndex] = {
+					...state.courses[courseIndex],
+					...updatedCourseData,
+				};
+			}
+		},
 	},
 	extraReducers: (builder) => {
 		builder
@@ -45,6 +57,6 @@ const coursesSlice = createSlice({
 	},
 });
 
-export const { setCourses, addCourse, deleteCourse } = coursesSlice.actions;
+export const { addCourse, updateCourse } = coursesSlice.actions;
 
 export default coursesSlice.reducer;

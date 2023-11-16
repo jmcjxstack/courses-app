@@ -65,6 +65,16 @@ export async function deleteCourseService(id) {
 	return response.data;
 }
 
+export async function updateCourseService(id, courseInfo) {
+	const token = localStorage.getItem('isAuth');
+	const response = await axios.put(`${API_URL}/courses/${id}`, courseInfo, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return response.data;
+}
+
 //Authors
 export async function getAllAuthorsService() {
 	const response = await axios.get(`${API_URL}/authors/all`);

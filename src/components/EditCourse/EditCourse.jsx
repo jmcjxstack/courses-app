@@ -1,21 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Input from '../../common/Input/Input';
 import Button from '../../common/Button/Button';
 import AuthorItem from '../AuthorItem/AuthorItem';
 
-import { addAuthorService, addCourseService } from '../../services';
+import {
+	addAuthorService,
+	loadCourseService,
+	updateCourseService,
+} from '../../services';
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { getAuthors } from '../../store/authors/authorsSelectors';
-import { addCourse } from '../../store/courses/coursesSlice';
+import { updateCourse } from '../../store/courses/coursesSlice';
 import { addAuthor } from '../../store/authors/authorsSlice';
 import './edit-course.css';
 
 export default function EditCourse() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
+	const { courseId } = useParams();
 	const authors = useSelector(getAuthors);
 
 	const [newCourse, setNewCourse] = useState({
@@ -25,23 +30,26 @@ export default function EditCourse() {
 		authors: [],
 	});
 
-	//state to manage new author
 	const [newAuthor, setNewAuthor] = useState({
 		name: '',
 	});
 
-	//state that renders all authors to add to a new course
 	const [authorsToAdd, setAuthorsToAdd] = useState(authors);
 
-	//state that holds authors for a new course
 	const [authorsToRemove, setAuthorsToRemove] = useState([]);
 
-	//re-renders list of authors when a new author is added.
+	useEffect(() => {
+		async function loadCourse() {
+			const response = await loadCourseService(courseId);
+			setNewCourse(response);
+		}
+		loadCourse();
+	}, [courseId]);
+
 	useEffect(() => {
 		setAuthorsToAdd(authors);
 	}, [authors]);
 
-	//tracks authors of new course and adds them to the new course
 	useEffect(() => {
 		const authorsList = authorsToRemove.map((author) => author.id);
 		setNewCourse((prevState) => ({
@@ -77,14 +85,12 @@ export default function EditCourse() {
 		});
 	}
 
-	//handles click of button to add author to new course
 	function handleAddAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToAdd(authorsToAdd.filter((a) => a.id !== author.id));
 		setAuthorsToRemove([...authorsToRemove, author]);
 	}
 
-	//handles click of button to remove author from new course
 	function handleRemoveAuthor(e, author) {
 		e.preventDefault();
 		setAuthorsToRemove(authorsToRemove.filter((a) => a.id !== author.id));
@@ -101,14 +107,9 @@ export default function EditCourse() {
 		) {
 			window.alert('Please fill in all fields, and add at least one author.');
 		} else {
-			const response = await addCourseService(newCourse);
-			dispatch(addCourse(response.result));
-			setNewCourse({
-				title: '',
-				description: '',
-				duration: 0,
-				authors: [],
-			});
+			const response = await updateCourseService(courseId, newCourse);
+			const updatedCourseData = response.result;
+			dispatch(updateCourse({ courseId, updatedCourseData }));
 			navigate('/courses');
 		}
 	}
@@ -132,7 +133,7 @@ export default function EditCourse() {
 					</div>
 					<div className='create-course-button'>
 						<Button
-							buttonName='Create Course'
+							buttonName='Update Course'
 							onClick={(e) => handleSubmitCourse(e)}
 						/>
 					</div>
