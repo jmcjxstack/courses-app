@@ -1,11 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { getAllCoursesService } from '../../services';
+import { deleteCourseService, getAllCoursesService } from '../../services';
 
-export const fetchCoursesData = createAsyncThunk(
-	'courses/fetchCoursesData',
+export const fetchCoursesDataThunk = createAsyncThunk(
+	'courses/fetchCoursesDataThunk',
 	async () => {
 		try {
 			const data = await getAllCoursesService();
+			return data;
+		} catch (error) {
+			throw error;
+		}
+	}
+);
+
+export const deleteCourseThunk = createAsyncThunk(
+	'courses/deleteCourseThunk',
+	async (id) => {
+		try {
+			const data = await deleteCourseService(id);
 			return data;
 		} catch (error) {
 			throw error;

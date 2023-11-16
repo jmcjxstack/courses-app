@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCoursesData } from './coursesThunk';
+import { fetchCoursesDataThunk, deleteCourseThunk } from './coursesThunk';
 
 const coursesInitialState = {
 	courses: [],
-	isDataFetched: false,
 	status: 'idle',
 	error: null,
 };
@@ -15,24 +14,31 @@ const coursesSlice = createSlice({
 		addCourse: (state, action) => {
 			state.courses.push(action.payload);
 		},
-		deleteCourse: (state, action) => {
-			const courseIdToDelete = action.payload;
-			state.courses = state.courses.filter(
-				(course) => course.id !== courseIdToDelete
-			);
-		},
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchCoursesData.pending, (state) => {
+			.addCase(fetchCoursesDataThunk.pending, (state) => {
 				state.status = 'loading';
 			})
-			.addCase(fetchCoursesData.fulfilled, (state, action) => {
+			.addCase(fetchCoursesDataThunk.fulfilled, (state, action) => {
 				state.status = 'succeeded';
 				state.courses = action.payload;
-				state.isDataFetched = true;
 			})
-			.addCase(fetchCoursesData.rejected, (state, action) => {
+			.addCase(fetchCoursesDataThunk.rejected, (state, action) => {
+				state.status = 'failed';
+				state.error = action.error.message;
+			})
+			.addCase(deleteCourseThunk.pending, (state) => {
+				state.status = 'loading';
+			})
+			.addCase(deleteCourseThunk.fulfilled, (state, action) => {
+				state.status = 'succeeded';
+				const courseIdToDelete = action.payload.result.split(' ')[4];
+				state.courses = state.courses.filter(
+					(course) => course.id !== courseIdToDelete
+				);
+			})
+			.addCase(deleteCourseThunk.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
 			});

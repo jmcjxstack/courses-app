@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { logoutUserService } from '../../services';
-import { fetchUserData } from './userThunk';
+import { fetchUserDataThunk } from './userThunk';
 
 const userInitialState = {
 	isAuth: false,
@@ -35,10 +35,10 @@ const userSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchUserData.pending, (state) => {
+			.addCase(fetchUserDataThunk.pending, (state) => {
 				state.status = 'loading';
 			})
-			.addCase(fetchUserData.fulfilled, (state, action) => {
+			.addCase(fetchUserDataThunk.fulfilled, (state, action) => {
 				try {
 					state.status = 'succeeded';
 					state.isAuth = true;
@@ -48,7 +48,7 @@ const userSlice = createSlice({
 					state.role = action.payload.result.role;
 				} catch (error) {}
 			})
-			.addCase(fetchUserData.rejected, (state, action) => {
+			.addCase(fetchUserDataThunk.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
 			});

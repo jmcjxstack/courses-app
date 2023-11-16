@@ -55,9 +55,15 @@ export async function loadCourseService(id) {
 	return response.data.result;
 }
 
-// export async function deleteCourseService() {
-// 	const response = await axios.delete();
-// }
+export async function deleteCourseService(id) {
+	const token = localStorage.getItem('isAuth');
+	const response = await axios.delete(`${API_URL}/courses/${id}`, {
+		headers: {
+			Authorization: token,
+		},
+	});
+	return response.data;
+}
 
 //Authors
 export async function getAllAuthorsService() {

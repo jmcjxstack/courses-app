@@ -7,8 +7,8 @@ import Button from '../../common/Button/Button';
 
 import { logoutUser } from '../../store/user/userSlice';
 import { getUserName } from '../../store/user/userSelectors';
+import { fetchUserDataThunk } from '../../store/user/userThunk';
 import './header.css';
-import { fetchUserData } from '../../store/user/userThunk';
 
 export default function Header() {
 	const location = useLocation();
@@ -20,7 +20,7 @@ export default function Header() {
 		if (
 			!(location.pathname === '/login' || location.pathname === '/registration')
 		) {
-			dispatch(fetchUserData());
+			dispatch(fetchUserDataThunk());
 		}
 	}, [location, dispatch]);
 

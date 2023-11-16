@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { getAllAuthorsService } from '../../services';
 
-export const fetchAuthorsData = createAsyncThunk(
-	'authors/fetchAuthorsData',
+export const fetchAuthorsDataThunk = createAsyncThunk(
+	'authors/fetchAuthorsDataThunk',
 	async () => {
 		try {
 			const data = await getAllAuthorsService();

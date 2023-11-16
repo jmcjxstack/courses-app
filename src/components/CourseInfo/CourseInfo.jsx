@@ -6,7 +6,6 @@ import Button from '../../common/Button/Button';
 
 import { getCourseDuration } from '../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../helpers/formatCreationDate';
-import { getCourseById } from '../../store/courses/coursesSelectors';
 import { getAuthors } from '../../store/authors/authorsSelectors';
 import './course-info.css';
 import { loadCourseService } from '../../services';

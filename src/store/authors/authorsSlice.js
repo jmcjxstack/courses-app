@@ -1,9 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchAuthorsData } from './authorsThunk';
+import { fetchAuthorsDataThunk } from './authorsThunk';
 
 const authorsInitialState = {
 	authors: [],
-	isDataFetched: false,
 	status: 'idle',
 	error: null,
 };
@@ -18,15 +17,14 @@ const authorsSlice = createSlice({
 	},
 	extraReducers: (builder) => {
 		builder
-			.addCase(fetchAuthorsData.pending, (state) => {
+			.addCase(fetchAuthorsDataThunk.pending, (state) => {
 				state.status = 'loading';
 			})
-			.addCase(fetchAuthorsData.fulfilled, (state, action) => {
+			.addCase(fetchAuthorsDataThunk.fulfilled, (state, action) => {
 				state.status = 'succeeded';
 				state.authors = action.payload;
-				state.isDataFetched = true;
 			})
-			.addCase(fetchAuthorsData.rejected, (state, action) => {
+			.addCase(fetchAuthorsDataThunk.rejected, (state, action) => {
 				state.status = 'failed';
 				state.error = action.error.message;
 			});

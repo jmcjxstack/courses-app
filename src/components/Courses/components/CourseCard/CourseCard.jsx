@@ -6,10 +6,10 @@ import Button from '../../../../common/Button/Button';
 
 import { getCourseDuration } from '../../../../helpers/getCourseDuration';
 import { formatCreationDate } from '../../../../helpers/formatCreationDate';
-import { deleteCourse } from '../../../../store/courses/coursesSlice';
 import { getCourses } from '../../../../store/courses/coursesSelectors';
 import { getAuthors } from '../../../../store/authors/authorsSelectors';
 import { getUserRole } from '../../../../store/user/userSelectors';
+import { deleteCourseThunk } from '../../../../store/courses/coursesThunk';
 import './courseCard.css';
 
 export default function CourseCard() {
@@ -20,7 +20,7 @@ export default function CourseCard() {
 	const role = useSelector(getUserRole);
 
 	function handleDelete(courseId) {
-		dispatch(deleteCourse(courseId));
+		dispatch(deleteCourseThunk(courseId));
 	}
 
 	return (
