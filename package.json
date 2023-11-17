@@ -1,6 +1,7 @@
 {
   "name": "courses-app",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -57,6 +58,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
     "jest": "^27.5.1",
-    "prettier": "^3.0.3"
+    "prettier": "^3.0.3",
+    "redux-mock-store": "^1.5.4"
   }
 }
