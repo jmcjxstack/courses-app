@@ -1,7 +1,6 @@
 {
   "name": "courses-app",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
@@ -21,7 +20,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "jest",
     "eject": "react-scripts eject",
     "eslint": "eslint --ext .js --ext .jsx src",
     "eslint:fix": "eslint --fix --ext .js --ext .jsx src",
@@ -57,7 +56,8 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.3",
-    "jest": "^27.5.1",
+    "jest": "^28.1.3",
+    "jest-environment-jsdom": "^28.1.3",
     "prettier": "^3.0.3",
     "redux-mock-store": "^1.5.4"
   }
