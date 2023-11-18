@@ -121,9 +121,11 @@ describe('CourseCard Component', () => {
 			</Provider>
 		);
 
-		expect(getByText(/Duration: \d{1,2}:\d{2}/).textContent).toMatch(
-			/\d{1,2}:\d{2}/
-		);
+		const durationElement = getByText(/Duration/i);
+
+		const durationText = durationElement.textContent;
+
+		expect(durationText).toMatch(/\d{1,2}:\d{2} hour\(s\)/);
 	});
 
 	it('should display the authors list of each course', () => {
@@ -139,7 +141,15 @@ describe('CourseCard Component', () => {
 			</Provider>
 		);
 
-		expect(getByText('Authors: author, author2')).toBeInTheDocument();
+		const authorsMatcher = (content, element) => {
+			const elementText = element.textContent || '';
+
+			return content.test(elementText);
+		};
+
+		expect(
+			getByText(/Authors: author, author2/, { matcher: authorsMatcher })
+		).toBeInTheDocument();
 	});
 
 	it('should display creationDate in the correct format', () => {
