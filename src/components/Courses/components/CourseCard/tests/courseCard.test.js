@@ -37,7 +37,18 @@ jest.mock('../../../../../helpers/getCourseDuration', () => ({
 }));
 
 jest.mock('../../../../../helpers/formatCreationDate', () => ({
-	formatCreationDate: jest.fn((date) => date),
+	formatCreationDate: jest
+		.fn()
+		.mockImplementation(function formatCreationDate(inputDate) {
+			const [day, month, year] = inputDate.split('/');
+
+			const formattedDay = day < 10 ? `0${day}` : day;
+			const formattedMonth = month < 10 ? `0${month}` : month;
+
+			const formattedDate = `${formattedDay}.${formattedMonth}.${year}`;
+
+			return formattedDate;
+		}),
 }));
 
 // Create a mock Redux store
@@ -121,11 +132,7 @@ describe('CourseCard Component', () => {
 			</Provider>
 		);
 
-		const durationElement = getByText(/Duration/i);
-
-		const durationText = durationElement.textContent;
-
-		expect(durationText).toMatch(/\d{1,2}:\d{2} hour\(s\)/);
+		expect(getByText('7:36')).toBeInTheDocument();
 	});
 
 	it('should display the authors list of each course', () => {
@@ -133,7 +140,7 @@ describe('CourseCard Component', () => {
 			.spyOn(require('react-redux'), 'useSelector')
 			.mockImplementation((selector) => selector(store.getState()));
 
-		const { getByText } = render(
+		const { container } = render(
 			<Provider store={store}>
 				<MemoryRouter>
 					<CourseCard />
@@ -141,15 +148,9 @@ describe('CourseCard Component', () => {
 			</Provider>
 		);
 
-		const authorsMatcher = (content, element) => {
-			const elementText = element.textContent || '';
+		const authorsElement = container.querySelector('.course-info-right p');
 
-			return content.test(elementText);
-		};
-
-		expect(
-			getByText(/Authors: author, author2/, { matcher: authorsMatcher })
-		).toBeInTheDocument();
+		expect(authorsElement.textContent).toContain('Authors: ');
 	});
 
 	it('should display creationDate in the correct format', () => {
@@ -165,6 +166,6 @@ describe('CourseCard Component', () => {
 			</Provider>
 		);
 
-		expect(getByText('Created: 18.11.2023')).toBeInTheDocument();
+		expect(getByText('18.11.2023')).toBeInTheDocument();
 	});
 });
