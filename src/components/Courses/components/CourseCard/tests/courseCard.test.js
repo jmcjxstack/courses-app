@@ -1,19 +1,17 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MemoryRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
 
 import CourseCard from '../CourseCard';
 
-// Mock the useDispatch and useSelector hooks
 jest.mock('react-redux', () => ({
 	...jest.requireActual('react-redux'),
 	useDispatch: jest.fn(),
 	useSelector: jest.fn(),
 }));
 
-// Mock the Button component
 jest.mock(
 	'../../../../../common/Button/Button',
 	() =>
@@ -24,7 +22,6 @@ jest.mock(
 		)
 );
 
-// Mock the helper functions
 jest.mock('../../../../../helpers/getCourseDuration', () => ({
 	getCourseDuration: jest
 		.fn()
@@ -51,7 +48,6 @@ jest.mock('../../../../../helpers/formatCreationDate', () => ({
 		}),
 }));
 
-// Create a mock Redux store
 const mockStore = configureStore([]);
 
 describe('CourseCard Component', () => {
@@ -94,9 +90,9 @@ describe('CourseCard Component', () => {
 
 		const { getByText } = render(
 			<Provider store={store}>
-				<MemoryRouter>
+				<BrowserRouter>
 					<CourseCard />
-				</MemoryRouter>
+				</BrowserRouter>
 			</Provider>
 		);
 
@@ -110,9 +106,9 @@ describe('CourseCard Component', () => {
 
 		const { getByText } = render(
 			<Provider store={store}>
-				<MemoryRouter>
+				<BrowserRouter>
 					<CourseCard />
-				</MemoryRouter>
+				</BrowserRouter>
 			</Provider>
 		);
 
@@ -126,9 +122,9 @@ describe('CourseCard Component', () => {
 
 		const { getByText } = render(
 			<Provider store={store}>
-				<MemoryRouter>
+				<BrowserRouter>
 					<CourseCard />
-				</MemoryRouter>
+				</BrowserRouter>
 			</Provider>
 		);
 
@@ -142,9 +138,9 @@ describe('CourseCard Component', () => {
 
 		const { container } = render(
 			<Provider store={store}>
-				<MemoryRouter>
+				<BrowserRouter>
 					<CourseCard />
-				</MemoryRouter>
+				</BrowserRouter>
 			</Provider>
 		);
 
@@ -160,9 +156,9 @@ describe('CourseCard Component', () => {
 
 		const { getByText } = render(
 			<Provider store={store}>
-				<MemoryRouter>
+				<BrowserRouter>
 					<CourseCard />
-				</MemoryRouter>
+				</BrowserRouter>
 			</Provider>
 		);
 
