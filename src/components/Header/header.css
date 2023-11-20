@@ -1,3 +1,8 @@
+.navbar-container {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
 .navbar {
     display: flex;
     flex-direction: row;
@@ -5,8 +10,25 @@
     height: 90px;
     margin-left: 10px;
     margin-right: 10px;
+    border: 1px solid #ff5e00
+}
+
+.logo {
+    margin-right: auto;
 }
 
 .name {
     margin-right: 20px;
+}
+
+.name-and-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.name-and-button button{
+    border: solid 1px purple;
+    height: 30px;
+    width: 120px;
 }

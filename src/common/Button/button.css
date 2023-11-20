@@ -1,5 +1,4 @@
 .button {
-    background: none;
     color: inherit;
     border: 1px solid black;
     padding: 5px;
@@ -7,4 +6,13 @@
     outline: inherit;
     margin-right: 10px;
     margin-left: 10px;
+}
+
+.button:hover {
+    background-color: #dfdfdf;
+}
+
+.button:active {
+    background-color: #c8c8c8;
+    
 }

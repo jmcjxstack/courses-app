@@ -1,3 +1,10 @@
-export function formatCreationDate(s) {
-	return `${s.slice(0, 2)}.${s.slice(3, 5)}.${s.slice(8, 10)}`;
+export function formatCreationDate(inputDate) {
+	const [day, month, year] = inputDate.split('/');
+
+	const formattedDay = day < 10 ? `0${day}` : day;
+	const formattedMonth = month < 10 ? `0${month}` : month;
+
+	const formattedDate = `${formattedDay}.${formattedMonth}.${year}`;
+
+	return formattedDate;
 }
